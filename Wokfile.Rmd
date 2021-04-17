@@ -14,7 +14,4 @@ data <- read_csv("Data/initial_table.csv")
 
 ```
 
-```{r}
-#test procedure
-```
 
