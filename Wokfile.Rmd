@@ -13,6 +13,7 @@ library(readr)
 data <- read.csv("Data/initial_table.csv")
 
 mean(data$AGE, na.rm = T)
+head(data)
 ```
 
 
