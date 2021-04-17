@@ -17,3 +17,7 @@ mean(data$AGE, na.rm = T)
 
 
 
+```{r}
+names(data)
+```
+
