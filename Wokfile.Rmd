@@ -11,7 +11,7 @@ library(readr)
 
 ```{r message=FALSE, warning=FALSE}
 data <- read.csv("Data/initial_table.csv")
-is.na(data$AGE)
+
 mean(data$AGE, na.rm = T)
 ```
 
