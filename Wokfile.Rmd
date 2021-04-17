@@ -11,6 +11,10 @@ library(readr)
 
 ```{r message=FALSE, warning=FALSE}
 data <- read_csv("Data/initial_table.csv")
-
 ```
 
+
+```{r message=FALSE, warning=FALSE}
+mage <- mean(data$AGE, na.rm=T)
+mage
+```
