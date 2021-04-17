@@ -21,3 +21,32 @@ mean(data$AGE, na.rm = T)
 names(data)
 ```
 
+
+## Ariane
+```{r}
+
+```
+
+
+## Alona
+```{r}
+
+```
+
+
+## Jadey
+```{r}
+
+```
+
+
+## Minsu
+```{r}
+
+```
+
+
+
+
+
+
