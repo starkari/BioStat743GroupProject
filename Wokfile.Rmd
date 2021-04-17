@@ -11,13 +11,9 @@ library(readr)
 
 ```{r message=FALSE, warning=FALSE}
 data <- read_csv("Data/initial_table.csv")
+mean(data$AGE, na.rm = T)
+
 ```
 
 
-<<<<<<< HEAD
-```{r message=FALSE, warning=FALSE}
-mage <- mean(data$AGE, na.rm=T)
-mage
-```
-=======
->>>>>>> 94f3962e3077a4a5dbf80a07c01ea297aae1e2b0
+
