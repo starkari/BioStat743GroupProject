@@ -1,7 +1,16 @@
 ---
 title: "Workfile"
-author: "Ariane Stark"
-date: "4/17/2021"
+author: "Group"
 output: pdf_document
 ---
+
+```{r}
+library(readr)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+data <- read_csv("Data/initial_table.csv")
+
+```
 
