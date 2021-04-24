@@ -10,7 +10,7 @@ library(readr)
 
 
 ```{r message=FALSE, warning=FALSE}
-data <- read_csv("Data/initial_table.csv")
+data <- read.csv("Data/initial_table.csv")
 mean(data$AGE, na.rm = T)
 
 ```
