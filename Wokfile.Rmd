@@ -184,17 +184,14 @@ p.val
 library(ROCR)
 pred1 <- prediction(fitted(fit.add), chf.dat$ZSN)
 val1 <- performance(pred1, 'tpr', 'fpr')
-
 pred2 <- prediction(fitted(fit.best), chf.dat$ZSN)
 val2 <- performance(pred2, 'tpr', 'fpr')
-
-mod1.lab <- expression('AGE'+'DLIT_AG'+'endocr_01')
-mod2.lab <- expression('AGE'+'DLIT_AG x endocr_01')
-
+lab1 <- expression('AGE'+'DLIT_AG'+'endocr_01')
+lab2 <- expression('AGE'+'DLIT_AG x endocr_01')
 plot(val1@x.values[[1]], val1@y.values[[1]], type='s', ylab=val1@y.name, xlab=val1@x.name, col='red', lwd=2)
 lines(val2@x.values[[1]], val2@y.values[[1]], type='s', col='blue', lty=2)
 abline(0,1, col='gray')
-legend('bottomright', c(mod1.lab, mod2.lab), col=c('red','blue'), lwd=c(2,1), lty=1:2, cex=.9, bty='n')
+legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, cex=.9, bty='n')
 
 ```
 
