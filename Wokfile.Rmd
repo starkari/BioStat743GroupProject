@@ -90,15 +90,95 @@ LR_data_age_chf
 ```
 
 
-
-
-
-
-
-
 ## Alona
 ```{r}
-#second chance-you did it
+library(knitr)
+# Duration of arterial hypertension (DLIT_AG): Ordinal 
+freq.dlitag <- data.work %>%
+  group_by(DLIT_AG) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+freq.dlitag
+
+# removing category 10 which is likely a mistake.
+data.work.2 <- data.work %>% 
+  filter(DLIT_AG != 10)
+
+mean(data.work.2$DLIT_AG) # 3.36
+median(data.work.2$DLIT_AG) #3
+
+
+tab <- table(data.work.2$DLIT_AG,data.work.2$ZSN)
+dimnames(tab) <- list("Duration of AH"=c("None","1-year","2-years","3-years","4-years",
+                                         "5-years","6-10 years",">=10 years"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+
+dlitag <- as.table(tab) 
+kable(dlitag,
+      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+
+# contingency table
+chisq <- round(chisq.test(dlitag)$statistic,3)
+pval <- round(chisq.test(dlitag)$p.value,3)
+lrt <- GTest(dlitag)
+std.res <- chisq.test(dlitag)$stdres
+
+# residual analysis
+mosaicplot(dlitag,
+           main = "",
+           xlab = "Duration of Arterial Hypertension",
+           ylab = "Chronic Heart Failure",
+           las = 1,
+           border = "chocolate",
+           shade = TRUE)
+
+# Logistic regression models for Chronic heart failure - ZSN as a function of DLIT_AG
+# canonical link
+fit.dlit.l <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial)
+summary(fit.dlit.l)
+
+# cloglog link
+fit.dlit.cll <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="cloglog"))
+summary(fit.dlit.cll)
+
+# identity link
+fit.dlit.i <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="identity"))
+summary(fit.dlit.i)
+
+
+# dichotomizing at the median - to assess the U shaped distribution factor of DLIT_AG
+data.work.2$DLIT_AG_BIN <- ifelse(data.work.2$DLIT_AG>=3, 1, 0)
+
+tab2 <- table(data.work.2$DLIT_AG_BIN,data.work.2$ZSN)
+dimnames(tab2) <- list("Duration of AH" = c("<3",">=3"),
+                       "Chronic Heart Failure"=c("No","Yes"))
+
+dlitag2 <- as.table(tab2) 
+kable(dlitag2)
+
+# contingency table
+chisq2 <- round(chisq.test(dlitag2)$statistic,3)
+pval2 <- round(chisq.test(dlitag2)$p.value,3)
+pval2
+lrt2 <- GTest(dlitag2)
+std.res2 <- chisq.test(dlitag2)$stdres
+
+# analysis excluding no arterial hypertension
+data.sub <- data.work.2 %>% 
+  filter(DLIT_AG !=0)
+
+tab3 <- table(data.sub$DLIT_AG,data.sub$ZSN)
+dimnames(tab3) <- list("Duration of AH" = c("1 year","2-years","3-years","4-years",
+                                           "5-years","6-10 years",">=10 years"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+
+dlitag3 <- as.table(tab3) 
+kable(dlitag3,
+      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+chisq3 <- round(chisq.test(dlitag3)$statistic,3)
+pval3 <- round(chisq.test(dlitag3)$p.value,3)
+lrt3 <- GTest(dlitag3)
+std.res3 <- chisq.test(dlitag3)$stdres
 ```
 
 
