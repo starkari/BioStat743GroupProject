@@ -61,6 +61,7 @@ names(data)
 ## Ariane
 ```{r}
 library("DescTools")
+library(tidyverse)
 #sex and chronic heart failure
 
 data_sex_chf <- table(data.work$SEX,data.work$ZSN)
@@ -80,12 +81,28 @@ LR_data_sex_chf
 data_age_chf <- table(data.work$AGE,data.work$ZSN)
 dimnames(data_age_chf) <- list(Age = names(data_age_chf[,1]),
                                "Chronic Heart Failure"=c("No","Yes"))
-data_age_chf
-chi_sq_data_age_chf <- chisq.test(data_age_chf)
-chi_sq_data_age_chf
+#data_age_chf
 
-LR_data_age_chf <- GTest(data_age_chf)
-LR_data_age_chf
+boxplot_age_chf <- data.work %>% 
+  ggplot() +
+  geom_boxplot(mapping = aes(x=AGE, y=as.factor(ZSN), 
+                             group = as.factor(ZSN))) +
+  ylab("Chronic Heart Failure") +
+  scale_y_discrete(labels=c("No","Yes"))
+boxplot_age_chf
+
+#CHF NO
+summary(data.work %>% 
+          filter(ZSN==0) %>% 
+          select(AGE))
+
+#CHF YES
+summary(data.work %>% 
+          filter(ZSN==1) %>% 
+          select(AGE))
+
+wilcox.test(data.work$AGE[which(data.work$ZSN == 0)],
+            data.work$AGE[which(data.work$ZSN == 1)])
 
 ```
 
