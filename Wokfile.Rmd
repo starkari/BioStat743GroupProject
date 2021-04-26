@@ -107,15 +107,122 @@ wilcox.test(data.work$AGE[which(data.work$ZSN == 0)],
 ```
 
 
-
-
-
-
-
-
 ## Alona
 ```{r}
-#second chance-you did it
+library(knitr)
+library(vcdExtra, quietly = TRUE)
+library("DescTools")
+library("ResourceSelection")
+
+# Duration of arterial hypertension (DLIT_AG): Ordinal 
+freq.dlitag <- data.work %>%
+  group_by(DLIT_AG) %>% 
+  dplyr::summarize(n = n()) %>%
+  mutate(freq = n/sum(n))
+freq.dlitag
+
+ggplot(data.work, aes(x = as.factor(ZSN), y = DLIT_AG)) +
+  geom_count()
+
+# removing category 10 which is likely a mistake.
+data.work.2 <- data.work %>% 
+  filter(DLIT_AG != 10)
+
+mean(data.work.2$DLIT_AG) # 3.36
+median(data.work.2$DLIT_AG) #3
+
+
+tab <- table(data.work.2$DLIT_AG,data.work.2$ZSN)
+dimnames(tab) <- list("Duration of AH"=c("None","1-year","2-years","3-years","4-years",
+                                         "5-years","6-10 years",">=10 years"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+
+# contingency table
+dlitag <- as.table(tab) 
+kable(dlitag,
+      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+
+#Ordinal trend test
+gamma.test <- GKgamma(dlitag)
+pvalg=2*pnorm(q=gamma.test$gamma/gamma.test$sigma, lower.tail=FALSE)
+pvalg
+
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm <- CochranArmitageTest(dlitag)
+coarm
+
+# chisq test can be used but is less powerful than the two above.
+chisq <- round(chisq.test(dlitag)$statistic,3)
+pval <- round(chisq.test(dlitag)$p.value,3)
+lrt <- GTest(dlitag)
+std.res <- chisq.test(dlitag)$stdres
+
+
+# all p-values from all test are confirming the finding that there is no relationship between 
+# duration of arterial hypertension and chronic heart failure
+
+# residual analysis
+# this is just a cool plot - unfortunately nothing is significant so there is no color.
+mosaicplot(dlitag,
+           main = "",
+           xlab = "Duration of Arterial Hypertension",
+           ylab = "Chronic Heart Failure",
+           las = 1,
+           border = "chocolate",
+           shade = TRUE)
+
+
+# Logistic regression models for Chronic heart failure - ZSN as a function of DLIT_AG
+# canonical link
+fit.dlit.l <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial)
+summary(fit.dlit.l)
+
+# cloglog link
+fit.dlit.cll <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="cloglog"))
+summary(fit.dlit.cll)
+
+# identity link
+fit.dlit.i <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="identity"))
+summary(fit.dlit.i)
+
+# consider other representations of the predictor variable.
+# dichotomizing at the median - to assess the U shaped distribution factor of DLIT_AG
+data.work.2$DLIT_AG_BIN <- ifelse(data.work.2$DLIT_AG>=3, 1, 0)
+
+tab2 <- table(data.work.2$DLIT_AG_BIN,data.work.2$ZSN)
+dimnames(tab2) <- list("Duration of AH" = c("<3",">=3"),
+                       "Chronic Heart Failure"=c("No","Yes"))
+
+dlitag2 <- as.table(tab2) 
+kable(dlitag2)
+
+# contingency table
+chisq2 <- round(chisq.test(dlitag2)$statistic,3)
+pval2 <- round(chisq.test(dlitag2)$p.value,3)
+pval2
+lrt2 <- GTest(dlitag2)
+std.res2 <- chisq.test(dlitag2)$stdres
+
+# we consider using values that are strictly greater than 0 since 0 has no duration value.
+# analysis excluding no arterial hypertension
+data.sub <- data.work.2 %>% 
+  filter(DLIT_AG !=0)
+
+tab3 <- table(data.sub$DLIT_AG,data.sub$ZSN)
+dimnames(tab3) <- list("Duration of AH" = c("1 year","2-years","3-years","4-years",
+                                           "5-years","6-10 years",">=10 years"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+
+dlitag3 <- as.table(tab3)
+#Ordinal trend test
+gamma.test.2 <- GKgamma(dlitag3)
+pvalg2=2*pnorm(q=gamma.test.2$gamma/gamma.test.2$sigma, lower.tail=FALSE)
+pvalg2
+
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm2 <- CochranArmitageTest(dlitag)
+coarm2
+
 ```
 
 
@@ -139,6 +246,76 @@ summary(death.fit)
 
 ## Minsu
 ```{r}
+#fit a model with all 7 predictors
+data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_01.f <- factor(data.work$endocr_01, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_02.f <- factor(data.work$endocr_02, levels=c(0,1), labels = c("no","yes"))
+chf.dat <- select(data.work, AGE, SEX, IBS_POST, DLIT_AG, SIM.f, endocr_01.f, endocr_02.f, ZSN) 
+fit<- glm(ZSN ~ . , data=chf.dat, family=binomial)
+summary(fit)
+
+#overall test for model with 7 predictors
+fit.0<- glm(ZSN ~ 1. , data=chf.dat, family=binomial)
+summary(fit.0)
+lr <- deviance(fit.0) - deviance(fit)
+df <- summary(fit.0)$df[2]-summary(fit)$df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+
+#add AGE and endocr_01 to the logistic model in subtopic 2. 
+fit.ini <- glm(ZSN~ DLIT_AG, data=chf.dat, family=binomial)
+fit.add <- glm(ZSN~ DLIT_AG + AGE + endocr_01.f, data=chf.dat, family=binomial)
+#goodnes of fit
+G.sq=deviance(fit.add)
+df.fit <- fit.add$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+
+#compare this additive model with the initial model with only DLIT_AG
+anova(fit.ini, fit.add)
+lr <- fit.ini$deviance - fit.add$deviance
+df <- anova(fit.ini, fit.add, test="LRT")$Df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+
+#Backward selection
+fit.3 <- glm(ZSN~ DLIT_AG* AGE * endocr_01.f, data=chf.dat, family=binomial)
+mod.back <- step(fit.3, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "backward")
+res.back <- mod.back$anova
+res.back 
+
+#Forward selection
+fit.0 <- glm(ZSN ~ 1 , data=chf.dat, family=binomial)
+mod.for <- step(fit.0, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "forward")
+res.for <- mod.for$anova
+res.for 
+
+#fit the best model
+fit.best <- glm(ZSN ~ AGE + DLIT_AG * endocr_01.f , data=chf.dat, family=binomial)
+summary(fit.best)
+
+#goodness of fit
+G.sq=deviance(fit.best)
+df.fit.best <- fit.best$df.residual
+p.val=1-pchisq(G.sq,df.fit.best)
+
+#compare this best model with the additive model 
+lr <- fit.add$deviance - fit.best$deviance
+df <- anova(fit.ini, fit.best, test="LRT")$Df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+
+#predictive power using ROC curve
+library(ROCR)
+pred1 <- prediction(fitted(fit.add), chf.dat$ZSN)
+val1 <- performance(pred1, 'tpr', 'fpr')
+pred2 <- prediction(fitted(fit.best), chf.dat$ZSN)
+val2 <- performance(pred2, 'tpr', 'fpr')
+lab1 <- expression('AGE'+'DLIT_AG'+'endocr_01')
+lab2 <- expression('AGE'+'DLIT_AG x endocr_01')
+plot(val1@x.values[[1]], val1@y.values[[1]], type='s', ylab=val1@y.name, xlab=val1@x.name, col='red', lwd=2)
+lines(val2@x.values[[1]], val2@y.values[[1]], type='s', col='blue', lty=2)
+abline(0,1, col='gray')
+legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, cex=.9, bty='n')
 
 ```
 
