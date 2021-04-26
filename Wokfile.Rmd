@@ -96,12 +96,16 @@ library(knitr)
 library(vcdExtra, quietly = TRUE)
 library("DescTools")
 library("ResourceSelection")
+
 # Duration of arterial hypertension (DLIT_AG): Ordinal 
 freq.dlitag <- data.work %>%
   group_by(DLIT_AG) %>% 
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
+  dplyr::summarize(n = n()) %>%
+  mutate(freq = n/sum(n))
 freq.dlitag
+
+ggplot(data.work, aes(x = as.factor(ZSN), y = DLIT_AG)) +
+  geom_count()
 
 # removing category 10 which is likely a mistake.
 data.work.2 <- data.work %>% 
