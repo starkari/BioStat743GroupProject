@@ -93,6 +93,9 @@ LR_data_age_chf
 ## Alona
 ```{r}
 library(knitr)
+library(vcdExtra, quietly = TRUE)
+library("DescTools")
+library("ResourceSelection")
 # Duration of arterial hypertension (DLIT_AG): Ordinal 
 freq.dlitag <- data.work %>%
   group_by(DLIT_AG) %>% 
@@ -113,17 +116,32 @@ dimnames(tab) <- list("Duration of AH"=c("None","1-year","2-years","3-years","4-
                                          "5-years","6-10 years",">=10 years"),
                       "Chronic Heart Failure"=c("No","Yes"))
 
+# contingency table
 dlitag <- as.table(tab) 
 kable(dlitag,
       caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
 
-# contingency table
+#Ordinal trend test
+gamma.test <- GKgamma(dlitag)
+pvalg=2*pnorm(q=gamma.test$gamma/gamma.test$sigma, lower.tail=FALSE)
+pvalg
+
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm <- CochranArmitageTest(dlitag)
+coarm
+
+# chisq test can be used but is less powerful than the two above.
 chisq <- round(chisq.test(dlitag)$statistic,3)
 pval <- round(chisq.test(dlitag)$p.value,3)
 lrt <- GTest(dlitag)
 std.res <- chisq.test(dlitag)$stdres
 
+
+# all p-values from all test are confirming the finding that there is no relationship between 
+# duration of arterial hypertension and chronic heart failure
+
 # residual analysis
+# this is just a cool plot - unfortunately nothing is significant so there is no color.
 mosaicplot(dlitag,
            main = "",
            xlab = "Duration of Arterial Hypertension",
@@ -131,6 +149,7 @@ mosaicplot(dlitag,
            las = 1,
            border = "chocolate",
            shade = TRUE)
+
 
 # Logistic regression models for Chronic heart failure - ZSN as a function of DLIT_AG
 # canonical link
@@ -145,7 +164,7 @@ summary(fit.dlit.cll)
 fit.dlit.i <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="identity"))
 summary(fit.dlit.i)
 
-
+# consider other representations of the predictor variable.
 # dichotomizing at the median - to assess the U shaped distribution factor of DLIT_AG
 data.work.2$DLIT_AG_BIN <- ifelse(data.work.2$DLIT_AG>=3, 1, 0)
 
@@ -163,6 +182,7 @@ pval2
 lrt2 <- GTest(dlitag2)
 std.res2 <- chisq.test(dlitag2)$stdres
 
+# we consider using values that are strictly greater than 0 since 0 has no duration value.
 # analysis excluding no arterial hypertension
 data.sub <- data.work.2 %>% 
   filter(DLIT_AG !=0)
@@ -172,13 +192,16 @@ dimnames(tab3) <- list("Duration of AH" = c("1 year","2-years","3-years","4-year
                                            "5-years","6-10 years",">=10 years"),
                       "Chronic Heart Failure"=c("No","Yes"))
 
-dlitag3 <- as.table(tab3) 
-kable(dlitag3,
-      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
-chisq3 <- round(chisq.test(dlitag3)$statistic,3)
-pval3 <- round(chisq.test(dlitag3)$p.value,3)
-lrt3 <- GTest(dlitag3)
-std.res3 <- chisq.test(dlitag3)$stdres
+dlitag3 <- as.table(tab3)
+#Ordinal trend test
+gamma.test.2 <- GKgamma(dlitag3)
+pvalg2=2*pnorm(q=gamma.test.2$gamma/gamma.test.2$sigma, lower.tail=FALSE)
+pvalg2
+
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm2 <- CochranArmitageTest(dlitag)
+coarm2
+
 ```
 
 
