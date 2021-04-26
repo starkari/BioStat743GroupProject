@@ -238,7 +238,7 @@ fit<- glm(ZSN ~ . , data=chf.dat, family=binomial)
 summary(fit)
 
 #overall test for model with 7 predictors
-fit.s0<- glm(ZSN ~ 1. , data=chf.dat, family=binomial)
+fit.0<- glm(ZSN ~ 1. , data=chf.dat, family=binomial)
 summary(fit.0)
 lr <- deviance(fit.0) - deviance(fit)
 df <- summary(fit.0)$df[2]-summary(fit)$df[2]
