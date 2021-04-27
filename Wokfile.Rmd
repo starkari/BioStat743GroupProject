@@ -17,16 +17,19 @@ data <- read.csv("Data/initial_table.csv")
 #mean(data$AGE, na.rm = T)
 data.work <- select(data, ID, AGE, SEX, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02, ZSN, LET_IS) 
 data.work <- na.omit(data.work)
-dim(data.work) # obs = 1381 
+data.work <- filter(data.work, DLIT_AG != 10)
+dim(data.work) # obs = 1380
 
 # exploratory analysis
-mean(data.work$AGE) #61.3997
-table(data.work$SEX) # female(0): 502, male(1): 879
-table(data.work$IBS_POST) # no CHD(0): 354, exertional angina pectoris(1):443, unstable angina pectoris(2):584
-mean(data.work$DLIT_AG) # 3.3407
-table(data.work$SIM_GIPERT) # no(0): 1337, yes(1): 44
-table(data.work$endocr_01) # no(0): 1194, yes(1):187
-table(data.work$endocr_02) # no(0): 1349, yes(1):32
+mean(data.work$AGE) #61.397
+median(data.work$AGE) # 62
+table(data.work$SEX) # female(0): 502, male(1): 878
+table(data.work$IBS_POST) # no CHD(0): 353, exertional angina pectoris(1):443, unstable angina pectoris(2):584
+mean(data.work$DLIT_AG) # 3.34
+median(data.work$DLIT_AG) # 3
+table(data.work$SIM_GIPERT) # no(0): 1336, yes(1): 44
+table(data.work$endocr_01) # no(0): 1193, yes(1):187
+table(data.work$endocr_02) # no(0): 1348, yes(1):32
 
 # distribution plots for single variable
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + labs(title = "age distribution", x = "age")
@@ -43,9 +46,11 @@ diabetes.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_01))) + geom_b
 
 obesity.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_02))) + geom_bar() + labs(title = "distribution of obesity", x = "obesity") + scale_x_discrete(labels = c("no", "yes"))
 
+chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) + geom_bar() + labs(title = "distribution of CHD", x = "CHD") + scale_x_discrete(labels = c("no", "yes"))
+
 ggarrange(age.hist, duration.hist, ncol = 2, nrow = 1)
 
-ggarrange(sex.plot, ibs.plot, hypertension.plot, diabetes.plot, obesity.plot, ncol = 3, nrow = 2)
+ggarrange(sex.plot, ibs.plot, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, ncol = 3, nrow = 2)
 
 # plots of the relationship between CHD and single variable
 
