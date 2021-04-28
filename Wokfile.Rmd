@@ -336,31 +336,45 @@ table(data.work2$death) # survive: 1212, dead: 191
 
 # use stepwise selection to select variable
 death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
-death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * IBS_POST + AGE * DLIT_AG + AGE * SIM_GIPERT + AGE * endocr_01 + AGE * endocr_02, data = data.work2, family = binomial)
-step(death.fit1, death.fit0, direction = "both") # selected variable: AGE, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02
-# fit the best model with different link function
-death.fit.logit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial)
-deviance(death.fit.logit)
+death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + DLIT_AG + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * IBS_POST + AGE * DLIT_AG + AGE * SIM_GIPERT + AGE * endocr_01 + AGE * endocr_02, data = data.work2, family = binomial)
+step(death.fit1, death.fit0, direction = "both") # selected variable: AGE, IBS_POST, SIM_GIPERT, endocr_01, endocr_02
 
-death.fit.probit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial(link = probit))
-deviance(death.fit.probit)
+# fit the best model 
+death.fit.logit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial)
+deviance(death.fit.logit) # 1018.906
 
-death.fit.cloglog <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial(link = cloglog))
-deviance(death.fit.cloglog)
+# Hosmer-Lemeshow test to check goodness of fit
+library("ResourceSelection")
+death.pred <- predict(death.fit.logit, data.work2, type = "response")
+hoslem.test(data.work2$death, death.pred, g = 20) # p = 0.4291, fail to reject H0
 
+## Get indices of vector fit, from smallest to greatest
+fit <- death.fit.logit$fitted.values
+index <- sort.list(fit)
+## check 10 smallest indices
+index[1:10]
+## create a matrix of death and fit, using this index
+hosmer <- matrix(c(data.work2$death[index], fit[index]), byrow = F, nrow = nrow(data.work2))
+head(hosmer)
+## group into 20 groups with 69 observations per group
+observed <- rep(NA, 20)
+for (i in 1:20){ observed[i] <- sum(hosmer[(69*(i-1) +1) : (69 *i), 1])/ 69 }
+observed
+# repeat the previous step for the predicted probability
+predicted <- rep(NA, 20)
+for (i in 1:20){ predicted[i] <- sum(hosmer[(69*(i-1) +1) : (69 *i), 2])/ 69 }
+predicted
+# plot observed versus predicted
+ggplot() + aes(x = predicted, y = observed) + geom_point() + geom_line() + geom_abline( a = 0, b = 1, color = "red")
 
+# model summary
+summary(death.fit.logit)
 
-# check goodness of fit
-
-
-glm.predict <- ifelse(predict(death.fit, data.work2, type = "response") > 0.5, 1, 0)
-sum(diag(table(glm.predict, data.work2$ZSN))) / nrow(data.work2)
-
-#death.fit2 <- glm(death ~ AGE + IBS_POST + endocr_02, data = data.work2, family = binomial)
-#summary(death.fit2)
-
-#anova(death.fit, death.fit2)
+# calculate 
+glm.predict <- ifelse(predict(death.fit.logit, data.work2, type = "response") > 0.5, 1, 0)
+sum(diag(table(glm.predict, data.work2$ZSN))) / nrow(data.work2) # 0.7616
 ```
+The final model fitted: $log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times age + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$. Hosmer Lemeshow tests shows adequate goodness of fit (p = 0.4291).
 
 
 
