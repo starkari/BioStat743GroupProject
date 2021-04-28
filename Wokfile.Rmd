@@ -79,7 +79,7 @@ chi_sq_data_sex_chf
 LR_data_sex_chf <- GTest(data_sex_chf)
 LR_data_sex_chf
 ```
-
+With the p-value<0.01 we reject the null and conclude there is an association between Sex and chronic heart failure
 
 ```{r}
 # age and chronic heart failure
@@ -110,7 +110,28 @@ wilcox.test(data.work$AGE[which(data.work$ZSN == 0)],
             data.work$AGE[which(data.work$ZSN == 1)])
 
 ```
+Results from Wilcoxon Rank Sum test rejects the null with the p-value <0.01 and concludes there is a difference and age between outcomes
 
+```{r}
+#look at age categorically by decade
+age_decade <- data.work %>% 
+  mutate(decade = floor(AGE/10)*10) %>% 
+  select(decade)
+data_age_decade_chf <- table(age_decade$decade,data.work$ZSN)
+dimnames(data_age_decade_chf) <- 
+  list(Age = paste0(names(data_age_decade_chf[,1]),"s"),
+                               "Chronic Heart Failure"=c("No","Yes"))
+data_age_decade_chf
+
+chi_sq_data_age_decade_chf <-chisq.test(data_age_decade_chf)
+chi_sq_data_age_decade_chf
+
+LR_data_age_decade_chf <- GTest(data_age_decade_chf)
+LR_data_age_decade_chf
+
+
+```
+Using the age by decade we have a p-value<0.01 which like the wilcoxon test suggest an association between age an chronic heart failure due to the rejection of the null
 
 ## Alona
 ```{r}
