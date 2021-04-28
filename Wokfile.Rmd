@@ -300,24 +300,6 @@ coarm2
 In conclusion, the variable of duration of arterial hypertension by itself is not associated with the outcome of chronic heart failure. This ordinal variable was tested in the original form - with equally spaced categories - and was also evaluated with an adjustment of score assignment for the last two categories (that are not one-to-one mapping of name to value)
 
 
-## Jadey
-```{r}
-data.work2 <- data.work
-data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
-table(data.work2$death) # survive: 1212, dead: 191
-
-# fit logistic model
-
-death.fit <- glm(death ~ . - ID - LET_IS - ZSN, data = data.work2, family = binomial)
-summary(death.fit)
-
-#death.fit2 <- glm(death ~ AGE + IBS_POST + endocr_02, data = data.work2, family = binomial)
-#summary(death.fit2)
-
-#anova(death.fit, death.fit2)
-```
-
-
 ## Minsu
 ```{r}
 #fit a model with all 7 predictors
@@ -394,6 +376,39 @@ legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, c
 ```
 
 
+## Jadey
+```{r}
+data.work2 <- data.work
+data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
+table(data.work2$death) # survive: 1212, dead: 191
+
+# use stepwise selection to select variable
+death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
+death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * IBS_POST + AGE * DLIT_AG + AGE * SIM_GIPERT + AGE * endocr_01 + AGE * endocr_02, data = data.work2, family = binomial)
+step(death.fit1, death.fit0, direction = "both") # selected variable: AGE, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02
+# fit the best model with different link function
+death.fit.logit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial)
+deviance(death.fit.logit)
+
+death.fit.probit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial(link = probit))
+deviance(death.fit.probit)
+
+death.fit.cloglog <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(DLIT_AG) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial(link = cloglog))
+deviance(death.fit.cloglog)
+
+
+
+# check goodness of fit
+
+
+glm.predict <- ifelse(predict(death.fit, data.work2, type = "response") > 0.5, 1, 0)
+sum(diag(table(glm.predict, data.work2$ZSN))) / nrow(data.work2)
+
+#death.fit2 <- glm(death ~ AGE + IBS_POST + endocr_02, data = data.work2, family = binomial)
+#summary(death.fit2)
+
+#anova(death.fit, death.fit2)
+```
 
 
 
