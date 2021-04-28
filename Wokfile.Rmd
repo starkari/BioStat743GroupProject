@@ -15,7 +15,7 @@ library(ggpubr)
 ```{r message=FALSE, warning=FALSE}
 data <- read.csv("Data/initial_table.csv")
 #mean(data$AGE, na.rm = T)
-data.work <- select(data, ID, AGE, SEX, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02, ZSN, LET_IS) 
+data.work <- dplyr::select(data, ID, AGE, SEX, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02, ZSN, LET_IS) 
 data.work <- na.omit(data.work)
 data.work <- filter(data.work, DLIT_AG != 10)
 dim(data.work) # obs = 1380
@@ -33,24 +33,29 @@ table(data.work$endocr_02) # no(0): 1348, yes(1):32
 
 # distribution plots for single variable
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + labs(title = "age distribution", x = "age")
+age.hist
 
 sex.plot <- ggplot(data.work, aes(as.factor(data.work$SEX))) + geom_bar() + labs(title = "distribution of sex", x = "sex") + scale_x_discrete(labels = c("female", "male"))
+sex.plot
 
 ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) + geom_bar() + labs(title = "distribution of CHD in recent weeks", x = "type of CHD") + scale_x_discrete(labels = c("no CHD", "extertional angina pectoris", "unstable angina pectoris"))
+ibs.plot
 
 duration.hist <- ggplot(data.work, aes(data.work$DLIT_AG)) + geom_histogram() + labs(title = "duration of arterial hypertension", x = "years")
+duration.hist
 
 hypertension.plot <- ggplot(data.work, aes(as.factor(data.work$SIM_GIPERT))) + geom_bar() + labs(title = "distribution of hypertension", x = "hypertension") + scale_x_discrete(labels = c("no", "yes"))
+hypertension.plot
 
 diabetes.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_01))) + geom_bar() + labs(title = "distribution of diabetes", x = "diabetes") + scale_x_discrete(labels = c("no", "yes"))
+diabetes.plot
 
 obesity.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_02))) + geom_bar() + labs(title = "distribution of obesity", x = "obesity") + scale_x_discrete(labels = c("no", "yes"))
+obesity.plot
 
 chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) + geom_bar() + labs(title = "distribution of CHD", x = "CHD") + scale_x_discrete(labels = c("no", "yes"))
+chd.plot
 
-#ggarrange(age.hist, duration.hist, ncol = 2, nrow = 1)
-
-#ggarrange(sex.plot, ibs.plot, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, ncol = 3, nrow = 2)
 
 ```
 
@@ -377,11 +382,12 @@ legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, c
 
 
 ## Jadey
-Build a mutivariable logistic regression model to predict the death of the cohort and check model prediction accuracy
+Build a mutivariable logistic regression model to predict the death of the cohort and check model prediction accuracy.
 ```{r}
 data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
 table(data.work2$death) # survive: 1212, dead: 191
+ggplot(data.work, aes(as.factor(data.work2$death))) + geom_bar() + labs(title = "distribution of death", x = "death") + scale_x_discrete(labels = c("no", "yes"))
 
 # use stepwise selection to select variable
 death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
@@ -425,6 +431,18 @@ sum(diag(table(glm.predict, data.work2$ZSN))) / nrow(data.work2) # 0.7616
 ```
 The final model fitted: $log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times age + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$. Hosmer Lemeshow tests shows adequate goodness of fit (p = 0.4291).
 
+
+Fit logistic regression with multinomial response
+```{r}
+library(nnet)
+data.work3 <- filter(data.work2, LET_IS != 0)
+dim(data.work3) # n = 191
+table(data.work3$LET_IS)
+ggplot(data.work3, aes(as.factor(data.work3$LET_IS))) + geom_bar() + labs(title = "causes of death") + xlab("") + scale_x_discrete(labels = c("cardiogenic shock", "pulmonary endema", "myocardial rupture", "progress of conestive heart failure", "thromboembolism", "asystole", "ventricular fibrillation"), guide = guide_axis(n.dodge = 2))
+
+
+multinom(LET_IS ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work3)
+```
 
 
 
