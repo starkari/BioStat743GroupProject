@@ -134,8 +134,10 @@ LR_data_age_decade_chf
 Using the age by decade we have a p-value<0.01 which like the wilcoxon test suggest an association between age an chronic heart failure due to the rejection of the null
 
 ## Alona
+Exploring the relationship between CHF and Duration of arterial hypertension.
 ```{r}
 library(knitr)
+library(tidyverse)
 library(vcdExtra, quietly = TRUE)
 library("DescTools")
 library("ResourceSelection")
@@ -149,10 +151,24 @@ freq.dlitag
 
 ggplot(data.work, aes(x = as.factor(ZSN), y = DLIT_AG)) +
   geom_count()
+```
 
+The two classes of CHF have similar distribution of proportions across the level of duration of arterial hypertension. We will further test the hypothesis that theres is an association between the two variables. 
+
+```{r}
 # removing category 10 which is likely a mistake.
-data.work.2 <- data.work %>% 
+data.work.2 <- data.work %>%
   filter(DLIT_AG != 10)
+
+data.work.3 <- data.work %>% 
+  mutate(DLIT_AG_N = case_when(DLIT_AG==6 ~ 8,  
+                               DLIT_AG==7 ~ 10,
+                               DLIT_AG==1 ~ 1,
+                               DLIT_AG==2 ~ 2,
+                               DLIT_AG==3 ~ 3,
+                               DLIT_AG==4 ~ 4,
+                               DLIT_AG==5 ~ 5
+                               ))
 
 mean(data.work.2$DLIT_AG) # 3.36
 median(data.work.2$DLIT_AG) #3
@@ -163,11 +179,16 @@ dimnames(tab) <- list("Duration of AH"=c("None","1-year","2-years","3-years","4-
                                          "5-years","6-10 years",">=10 years"),
                       "Chronic Heart Failure"=c("No","Yes"))
 
+tab2 <- table(data.work.3$DLIT_AG_N,data.work.3$ZSN)
+
 # contingency table
-dlitag <- as.table(tab) 
+dlitag <- as.table(tab2) 
 kable(dlitag,
       caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+```
 
+Duration of Arterial Hypertension is an ordinal type variable. we therefore use ordinal trend tests 
+```{r}
 #Ordinal trend test
 gamma.test <- GKgamma(dlitag)
 pvalg=2*pnorm(q=gamma.test$gamma/gamma.test$sigma, lower.tail=FALSE)
@@ -179,8 +200,8 @@ coarm
 
 # chisq test can be used but is less powerful than the two above.
 chisq <- round(chisq.test(dlitag)$statistic,3)
-pval <- round(chisq.test(dlitag)$p.value,3)
-lrt <- GTest(dlitag)
+#pval <- round(chisq.test(dlitag)$p.value,3)
+#lrt <- GTest(dlitag)
 std.res <- chisq.test(dlitag)$stdres
 
 
@@ -196,12 +217,17 @@ mosaicplot(dlitag,
            las = 1,
            border = "chocolate",
            shade = TRUE)
+```
+All tests have non-significant p-value (>0.2) which suggest that we do not reject the null of no association.
 
-
+```{r}
 # Logistic regression models for Chronic heart failure - ZSN as a function of DLIT_AG
 # canonical link
 fit.dlit.l <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial)
 summary(fit.dlit.l)
+
+# fit.dlitn.l <- glm(ZSN ~ DLIT_AG_N, data=data.work.3, family=binomial)
+# summary(fit.dlitn.l)
 
 # cloglog link
 fit.dlit.cll <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="cloglog"))
@@ -211,6 +237,25 @@ summary(fit.dlit.cll)
 fit.dlit.i <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="identity"))
 summary(fit.dlit.i)
 
+#goodness of fit
+G.sq=deviance(fit.dlit.l)
+df.fit <- fit.dlit.l$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+p.val
+
+newdata <- data.frame(DLIT_AG=seq(min(data.work.2$DLIT_AG), max(data.work.2$DLIT_AG),len=23))
+newdata$ZSN <- predict(fit.dlit.l, newdata=newdata, type="response")
+plot(ZSN~DLIT_AG, data=data.work.2, col="black",
+     main = "Plot A",
+     ylab = "Predicted probability of CHF", 
+     xlab = "Duration of arterial hypertension")
+lines(ZSN~DLIT_AG, newdata, col="Blue", lwd=2)
+```
+The logistic regression model for CHF as explained by duration of arterial hypertension is not predictive. The predicted probabilities are effectively constant and the goodness of fit value is
+`r I(p.val)` suggesting we reject the null of the model fitting the data.
+
+
+```{r include=FALSE}
 # consider other representations of the predictor variable.
 # dichotomizing at the median - to assess the U shaped distribution factor of DLIT_AG
 data.work.2$DLIT_AG_BIN <- ifelse(data.work.2$DLIT_AG>=3, 1, 0)
@@ -228,15 +273,18 @@ pval2 <- round(chisq.test(dlitag2)$p.value,3)
 pval2
 lrt2 <- GTest(dlitag2)
 std.res2 <- chisq.test(dlitag2)$stdres
+```
 
+
+```{r include=FALSE}
 # we consider using values that are strictly greater than 0 since 0 has no duration value.
 # analysis excluding no arterial hypertension
-data.sub <- data.work.2 %>% 
-  filter(DLIT_AG !=0)
+data.sub <- data.work.3 %>% 
+  filter(DLIT_AG_N !=0)
 
-tab3 <- table(data.sub$DLIT_AG,data.sub$ZSN)
-dimnames(tab3) <- list("Duration of AH" = c("1 year","2-years","3-years","4-years",
-                                           "5-years","6-10 years",">=10 years"),
+tab3 <- table(data.sub$DLIT_AG_N,data.sub$ZSN)
+dimnames(tab3) <- list("Duration of AH" = c("1 year","2 years","3 years","4 years",
+                                           "5 years","6-10 years",">=10 years"),
                       "Chronic Heart Failure"=c("No","Yes"))
 
 dlitag3 <- as.table(tab3)
@@ -246,10 +294,10 @@ pvalg2=2*pnorm(q=gamma.test.2$gamma/gamma.test.2$sigma, lower.tail=FALSE)
 pvalg2
 
 # Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
-coarm2 <- CochranArmitageTest(dlitag)
+coarm2 <- CochranArmitageTest(dlitag3)
 coarm2
-
 ```
+In conclusion, the variable of duration of arterial hypertension by itself is not associated with the outcome of chronic heart failure. This ordinal variable was tested in the original form - with equally spaced categories - and was also evaluated with an adjustment of score assignment for the last two categories (that are not one-to-one mapping of name to value)
 
 
 ## Minsu
