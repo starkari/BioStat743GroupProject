@@ -48,11 +48,9 @@ obesity.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_02))) + geom_ba
 
 chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) + geom_bar() + labs(title = "distribution of CHD", x = "CHD") + scale_x_discrete(labels = c("no", "yes"))
 
-ggarrange(age.hist, duration.hist, ncol = 2, nrow = 1)
+#ggarrange(age.hist, duration.hist, ncol = 2, nrow = 1)
 
-ggarrange(sex.plot, ibs.plot, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, ncol = 3, nrow = 2)
-
-# plots of the relationship between CHD and single variable
+#ggarrange(sex.plot, ibs.plot, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, ncol = 3, nrow = 2)
 
 ```
 
@@ -64,6 +62,7 @@ names(data)
 
 
 ## Ariane
+Exploring relathionship between age and CHD
 ```{r}
 library("DescTools")
 library(tidyverse)
@@ -301,6 +300,7 @@ In conclusion, the variable of duration of arterial hypertension by itself is no
 
 
 ## Minsu
+Build a multivariable logistic regression model
 ```{r}
 #fit a model with all 7 predictors
 data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
@@ -377,6 +377,7 @@ legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, c
 
 
 ## Jadey
+Build a mutivariable logistic regression model to predict the death of the cohort and check model prediction accuracy
 ```{r}
 data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
