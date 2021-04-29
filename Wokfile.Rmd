@@ -305,7 +305,7 @@ In conclusion, the variable of duration of arterial hypertension by itself is no
 
 
 ## Minsu
-Build a multivariable logistic regression model
+Build a multivariable logistic regression model, identifying the best model, and calculating predictive power of the model.
 ```{r}
 #fit a model with all 7 predictors
 data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
@@ -322,7 +322,10 @@ lr <- deviance(fit.0) - deviance(fit)
 df <- summary(fit.0)$df[2]-summary(fit)$df[2]
 p.val <- 1 - pchisq(lr, df=df)
 p.val
+```
+There is strong evidence that at least one predictor has an effect. Although the overall test is highly significant, summary(fit) results show that only AGE and endocr_01 seems significant in the Wald test. 
 
+```{r}
 #add AGE and endocr_01 to the logistic model in subtopic 2. 
 fit.ini <- glm(ZSN~ DLIT_AG, data=chf.dat, family=binomial)
 fit.add <- glm(ZSN~ DLIT_AG + AGE + endocr_01.f, data=chf.dat, family=binomial)
@@ -337,7 +340,10 @@ lr <- fit.ini$deviance - fit.add$deviance
 df <- anova(fit.ini, fit.add, test="LRT")$Df[2]
 p.val <- 1 - pchisq(lr, df=df)
 p.val
+```
+The model with AGE and endocr_01 in addition to DLIT_AG improves the goodness-of-fit. Next, we perform stepwise model selection through the forward and backward elimination methods to see if there is effect of interaction between predictors. 
 
+```{r}
 #Backward selection
 fit.3 <- glm(ZSN~ DLIT_AG* AGE * endocr_01.f, data=chf.dat, family=binomial)
 mod.back <- step(fit.3, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "backward")
@@ -377,9 +383,9 @@ plot(val1@x.values[[1]], val1@y.values[[1]], type='s', ylab=val1@y.name, xlab=va
 lines(val2@x.values[[1]], val2@y.values[[1]], type='s', col='blue', lty=2)
 abline(0,1, col='gray')
 legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, cex=.9, bty='n')
-
 ```
-
+The model with the interaction between AGE and DLIT_AG and endocr_01.f doesn't improve the goodness-of-fit.  
+As seen in the ROC Figure, their ROC curves are very close, thus we expect their performance for prediction will be almost same. 
 
 ## Jadey
 Build a mutivariable logistic regression model to predict the death of the cohort and check model prediction accuracy.
