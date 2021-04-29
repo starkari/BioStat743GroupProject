@@ -186,7 +186,7 @@ dimnames(tab) <- list("Duration of AH"=c("None","1-year","2-years","3-years","4-
 tab2 <- table(data.work.3$DLIT_AG_N,data.work.3$ZSN)
 
 # contingency table
-dlitag <- as.table(tab2) 
+dlitag <- as.table(tab) 
 kable(dlitag,
       caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
 ```
@@ -263,21 +263,37 @@ The logistic regression model for CHF as explained by duration of arterial hyper
 # consider other representations of the predictor variable.
 # dichotomizing at the median - to assess the U shaped distribution factor of DLIT_AG
 data.work.2$DLIT_AG_BIN <- ifelse(data.work.2$DLIT_AG>=3, 1, 0)
+data.work.2$DLIT_AG_BIN2 <- ifelse(data.work.2$DLIT_AG>=1, 1, 0)
 
 tab2 <- table(data.work.2$DLIT_AG_BIN,data.work.2$ZSN)
 dimnames(tab2) <- list("Duration of AH" = c("<3",">=3"),
                        "Chronic Heart Failure"=c("No","Yes"))
 
+tab2a <- table(data.work.2$DLIT_AG_BIN2,data.work.2$ZSN)
+dimnames(tab2a) <- list("Duration of AH" = c("0",">0"),
+                       "Chronic Heart Failure"=c("No","Yes"))
+
 dlitag2 <- as.table(tab2) 
 kable(dlitag2)
 
-# contingency table
+dlitag2a <- as.table(tab2a) 
+kable(dlitag2a)
+
+# contingency tables
 chisq2 <- round(chisq.test(dlitag2)$statistic,3)
 pval2 <- round(chisq.test(dlitag2)$p.value,3)
 pval2
 lrt2 <- GTest(dlitag2)
 std.res2 <- chisq.test(dlitag2)$stdres
+
+chisq2a <- round(chisq.test(dlitag2a)$statistic,3)
+pval2a <- round(chisq.test(dlitag2a)$p.value,3)
+pval2a
+lrt2a <- GTest(dlitag2a)
+std.res2a <- chisq.test(dlitag2a)$stdres
 ```
+Considering the U shaped distribution of the variable, We also conducted the analysis for the dichotomized (at the median) variable. The results were no different than in the original form.
+We also evaluated if a binary cut of the duration of arterial hypertension to no arterial hypertension (category of 0) vs. duration of arterial hypertension > 0 has more meaningful association with CHF and here too, the results were not different.
 
 
 ```{r include=FALSE}
