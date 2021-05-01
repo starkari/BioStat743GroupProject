@@ -35,9 +35,14 @@ data.work <- filter(data.work, DLIT_AG != 10)
 
 Introduction text here
 
-## Initial Data Analysis
+## Descriptive Statistics
 
 put summary
+```{r}
+age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + 
+  labs(title = "age distribution", x = "age")
+age.hist
+```
 
 ## Ariane Slides Start
 
