@@ -67,7 +67,7 @@ names(data)
 
 
 ## Ariane
-Exploring relathionship between age and CHD
+Exploring relationship between age and CHD
 ```{r}
 library("DescTools")
 library(tidyverse)

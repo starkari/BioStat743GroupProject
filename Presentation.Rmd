@@ -1,0 +1,58 @@
+---
+title: "Presentation"
+author: "Minsu Kim, Alona Muzikansky, Ariane Stark, Jadey Wu"
+output: 
+  beamer_presentation:
+    theme: "Madrid"
+
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(DescTools)
+library(tidyverse)
+library(knitr)
+library(tidyverse)
+library(vcdExtra, quietly = TRUE)
+library(ResourceSelection)
+library(nnet)
+```
+
+
+```{r include=FALSE}
+data <- read.csv("Data/initial_table.csv")
+#mean(data$AGE, na.rm = T)
+data.work <- dplyr::select(data, ID, AGE, SEX, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02, ZSN, LET_IS) 
+data.work <- na.omit(data.work)
+data.work <- filter(data.work, DLIT_AG != 10)
+```
+
+
+## Introduction 
+
+Introduction text here
+
+## Initial Data Analysis
+
+put summary
+
+## Ariane Slides Start
+
+Ariane
+
+## Alona
+
+Alona
+
+## Minsu
+
+Minsu
+
+## Jadey
+
+Jadey
+
+
