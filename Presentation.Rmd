@@ -41,7 +41,7 @@ Introduction text here
 ## Descriptive statistics
 
 - Demographic information
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center"}
 # distribution plots for single variable
 
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + 
@@ -50,26 +50,26 @@ age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() +
   geom_vline(xintercept = median(data.work$AGE), linetype = "dotted") +
   annotate("text", x = 40, y = 120, label = "mean = 61.397") +
   annotate("text", x = 40, y = 110, label = "median = 62") 
-age.hist
+#age.hist
 
 sex.plot <- ggplot(data.work, aes(as.factor(data.work$SEX))) + geom_bar() + 
   labs(title = "distribution of sex", x = "sex", y = "") + 
   scale_x_discrete(labels = c("female", "male")) +
   annotate("text", x = 1, y = 780, label = "female = 502") +
   annotate("text", x = 1, y = 720, label = "male = 878") 
-sex.plot
+#sex.plot
 
 grid.arrange(age.hist, sex.plot, nrow = 1)
 
 ```
 
 ## Descriptive statistics
-
 - Patient physiological attributes
 - IBS_POST: coronary heart disease in recen weeks before admission to hospital
   - 0: there was no CHD
   - 1: extertional angina pectoris
   - 2: unstable angina pectoris
+
 - DLIT_AG: duration of arterial hypertension
   - 0: there was no arterial hypertension
   - 1: one year
@@ -79,16 +79,16 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
   - 5: five years
   - 6: 6-10 years
   - 7: more than 10 years
+  
+## Descriptive statistics  
 - SIM_GIPERT: systematic hypertension; 0 - no, 1 - yes
 - endocr_01: diabetes mellitus in the anamnesis; 0 - no, 1 - yes
 - endocr_02: obesity in the anamnesis; 0 - no, 1 - yes
-
 - ZSN: chronic heart failure; 0 - no, 1 - yes
-
 
 ## Descriptive statistics
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center"}
 ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) + 
   geom_bar() + 
   labs(title = "IBS_POST", x = "type of CHD") +
@@ -286,10 +286,11 @@ Minsu
 - Build a logistic regression model to predict death of the patients by turning LET_IS to a binary variable "death"
 - Build model with multimonial response to investigate the cause of death
 
-```{r}
-ata.work2 <- data.work
+## Secondary analysis - modeling the relationship between death outcome and selected variables
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
-table(data.work2$death) # survive: 1212, dead: 191
+#table(data.work2$death) # survive: 1212, dead: 191
 
 death.plot <- ggplot(data.work, aes(as.factor(data.work2$death))) + 
   geom_bar() + 
@@ -299,8 +300,8 @@ death.plot <- ggplot(data.work, aes(as.factor(data.work2$death))) +
   annotate("text", x = 2, y = 800, label = "yes: 191")
 
 data.work3 <- filter(data.work2, LET_IS != 0)
-dim(data.work3) # n = 191
-table(data.work3$LET_IS)
+#dim(data.work3) # n = 191
+#table(data.work3$LET_IS)
 cause.plot <- ggplot(data.work3, aes(as.factor(data.work3$LET_IS))) + 
   geom_bar() + 
   labs(title = "causes of death") + 
@@ -312,12 +313,11 @@ grid.arrange(death.plot, cause.plot, nrow = 2)
 
 
 ## Secondary analysis
-
 - Full model contains continuous variables AGE, DLIT_AG, categorical variables SEX, IBS_POST, SIM_GIPERT, endocr_01, endocr_02, and the interaction terms between AGE and all the other variables.
 - Used stepwise step() to select the best model.
 - The best model selected:
 
-$log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times age + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$.
+$log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times AGE + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$
 
 - All selected predictors increase the probability of death. 
   - exp(beta_age) = 1.06
@@ -326,7 +326,7 @@ $log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times age + 0.073 \times I(IBS =
   - OR(hypertension vs. non hypertension) = 2.07 (p = 0.065 > 0.5)
   - OR(diabetes vs. non diabetes) = 1.61
   - OR(obese vs. not obese) = 2.95
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 # use stepwise selection to select variable
 death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
 death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + DLIT_AG + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * factor(IBS_POST) + AGE * DLIT_AG + AGE * factor(SIM_GIPERT) + AGE * factor(endocr_01) + AGE * factor(endocr_02), data = data.work2, family = binomial)
@@ -345,12 +345,14 @@ exp(death.fit.logit$coefficients)
 - Goodness of fit check with Hosmer-Lemeshow test by grouping the observations into 20 groups. The test statistic is 0.4291, indicating an adequate fit of the model to the dataset.
 - Plotted the predicted value against the observed value of the 20 groups. Overall the dots follow the diagonal. 
 
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 # Hosmer-Lemeshow test to check goodness of fit
 library("ResourceSelection")
 death.pred <- predict(death.fit.logit, data.work2, type = "response")
 hoslem.test(data.work2$death, death.pred, g = 20) # p = 0.4291, fail to reject H0
+```
 
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 ## Get indices of vector fit, from smallest to greatest
 fit <- death.fit.logit$fitted.values
 index <- sort.list(fit)
@@ -367,23 +369,39 @@ observed
 predicted <- rep(NA, 20)
 for (i in 1:20){ predicted[i] <- sum(hosmer[(69*(i-1) +1) : (69 *i), 2])/ 69 }
 predicted
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, out.width = "200px", out.height="300px", fig.align = "center"}
 # plot observed versus predicted
 ggplot() + aes(x = predicted, y = observed) + geom_point() + geom_line() + geom_abline( a = 0, b = 1, color = "red")
 ```
 
-## Secondary analysis
 
+## Secondary analysis
 - Fit baseline category logit model on cause of death. Used predictors selected in the previous analysis. 
 $log \frac{\pi_j(x)}{\pi_J(x)} = \beta_{0j} + \beta_{1j} \times AGE + \beta_{2j} \times I(IBS = 1) + \beta_{3j} \times I(IBS = 2) + \beta_{4j} \times I(SIM = 1) + \beta_{5j} \times I(endocr01 = 1) + \beta_{6j} \times I(endocr02 = 1), j = 1, ..., 6$
 
 where J = cardiogenic shock, j = 1 pulmonary edema, 2 myocardial rupture, 3 progress of congestive heart failure, 4 thromboembolism, 5 asystole, 6 ventricular fibrillation
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 multi.mod <- multinom(LET_IS ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work3)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE, out.width = "200px", out.height="300px", fig.align="cente"}
 output <- summary(multi.mod)
 table <- as.data.frame(output$coefficients)
 colnames(table) <- c("intercept", "AGE", "IBS_POST = 1", "IBS_POST = 2", "SIM_GIPERT = 1", "endocr_01 = 1", "endocr_02 = 1")
+```
+
+## Secondary analysis
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 print(table)
+```
+
+## Secondary analysis
+Estimated $exp(\beta_{ij})$:
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+print(exp(table))
 ```
 
 
