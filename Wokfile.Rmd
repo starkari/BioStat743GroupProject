@@ -27,9 +27,11 @@ table(data.work$SEX) # female(0): 502, male(1): 878
 table(data.work$IBS_POST) # no CHD(0): 353, exertional angina pectoris(1):443, unstable angina pectoris(2):584
 mean(data.work$DLIT_AG) # 3.34
 median(data.work$DLIT_AG) # 3
+median(data.work$DLIT_AG) # 3
 table(data.work$SIM_GIPERT) # no(0): 1336, yes(1): 44
 table(data.work$endocr_01) # no(0): 1193, yes(1):187
 table(data.work$endocr_02) # no(0): 1348, yes(1):32
+table(data.work$ZSN) # no(0): 1052, yes(1): 328
 
 # distribution plots for single variable
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + labs(title = "age distribution", x = "age")
