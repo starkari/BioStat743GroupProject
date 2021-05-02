@@ -35,13 +35,135 @@ data.work <- filter(data.work, DLIT_AG != 10)
 
 Introduction text here
 
-## Initial Data Analysis
+## Descriptive Statistics
 
 put summary
+```{r}
+age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + 
+  labs(title = "age distribution", x = "age")
+age.hist
+```
 
-## Ariane Slides Start
+## Ariane: Analysis of Sex and Chronic Heart Failure: Overview
 
-Ariane
+Question: Is there an association between sex and chronic heart failure?
+
+```{r echo=FALSE,comment=NA }
+data_sex_chf <- table(data.work$SEX,data.work$ZSN)
+dimnames(data_sex_chf) <- list(Sex=c("Female","Male"),         
+                       "Chronic Heart Failure"=c("No","Yes"))
+data_sex_chf
+```
+
+## Analysis of Sex and Chronic Heart Failure: Tests
+
+Pearson $\chi^2$ Test of Independence:
+
+```{r echo=FALSE,  comment=NA}
+chi_sq_data_sex_chf <-chisq.test(data_sex_chf)
+chi_sq_data_sex_chf$statistic
+cat(paste("p-value =",round(chi_sq_data_sex_chf$p.value,5)))
+```
+
+Likelihood Ratio Test of Independence:
+
+```{r echo=FALSE,comment=NA}
+LR_data_sex_chf <- GTest(data_sex_chf)
+LR_data_sex_chf$statistic
+cat(paste("p-value =",round(LR_data_sex_chf$p.value,5)))
+```
+## Analysis of Age(Continuous) and Chronic Heart Failure: Overview
+
+Question: Is there an association between age and chronic heart failure?
+```{r echo=FALSE, fig.height=5.75, comment=NA}
+# age and chronic heart failure
+data_age_chf <- table(data.work$AGE,data.work$ZSN)
+dimnames(data_age_chf) <- list(Age = names(data_age_chf[,1]),
+                               "Chronic Heart Failure"=c("No","Yes"))
+#data_age_chf
+
+boxplot_age_chf <- data.work %>% 
+  ggplot() +
+  geom_boxplot(mapping = aes(x=AGE, y=as.factor(ZSN), 
+                             group = as.factor(ZSN))) +
+  ylab("Chronic Heart Failure") +
+  scale_y_discrete(labels=c("No","Yes"))
+boxplot_age_chf
+```
+
+## Analysis of Age(Continuous) and Chronic Heart Failure: Summary Statistics
+
+```{r echo=FALSE,comment=NA}
+#CHF NO
+chf_no <- summary(data.work %>% 
+          filter(ZSN==0) %>% 
+          select(AGE))
+
+#CHF YES
+chf_yes <- summary(data.work %>% 
+          filter(ZSN==1) %>% 
+          select(AGE))
+
+chf_age_cont_descriptive_statistcs <- data.work %>% 
+  transform("ZSN" = ifelse(ZSN==1,"Yes","No")) %>% 
+  group_by(ZSN) %>% 
+  summarise_at(vars("AGE"), list( "Min." = min,
+            "1st Qu." = ~quantile(.,prob=0.25),
+            "Median" = ~quantile(.,prob=0.5),
+            "Mean" = mean,
+            "3rd Qu." = ~quantile(.,prob=0.75),
+            "Max" = max)) 
+
+chf_age_cont_descriptive_statistcs_t <-
+  as.table(t(as.matrix.data.frame(chf_age_cont_descriptive_statistcs)))[-1,]
+
+
+dimnames(chf_age_cont_descriptive_statistcs_t) <- list(" "=rownames(chf_age_cont_descriptive_statistcs_t),         
+                       "Chronic Heart Failure"=c("No","Yes"))
+
+print(chf_age_cont_descriptive_statistcs_t)
+```
+
+## Analysis of Age(Continuous) and Chronic Heart Failure: Test
+
+Analysis was done using a two sided Wilcoxon Rank Sum Test to test if there is a difference in Chronic Heart Failure outcome across age.
+
+```{r echo=FALSE,comment=NA}
+wilcox_test <- wilcox.test(data.work$AGE[which(data.work$ZSN == 0)],
+            data.work$AGE[which(data.work$ZSN == 1)])
+wilcox_test$statistic
+cat(paste("p-value =",round(wilcox_test$p.value,8)))
+```
+## Analysis of Age(Categorical) and Chronic Heart Failure: Overview
+
+Question: Is there an association between age(decade) and chronic heart failure?
+```{r echo=FALSE,comment=NA}
+age_decade <- data.work %>% 
+  mutate(decade = floor(AGE/10)*10) %>% 
+  select(decade)
+data_age_decade_chf <- table(age_decade$decade,data.work$ZSN)
+dimnames(data_age_decade_chf) <- 
+  list(Age = paste0(names(data_age_decade_chf[,1]),"s"),
+                               "Chronic Heart Failure"=c("No","Yes"))
+data_age_decade_chf
+```
+
+## Analysis of Age(Categorical) and Chronic Heart Failure: Test
+
+Pearson $\chi^2$ Test of Independence:
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+chi_sq_data_age_decade_chf <-chisq.test(data_age_decade_chf)
+chi_sq_data_age_decade_chf$statistic
+cat(paste("p-value =",round(chi_sq_data_age_decade_chf$p.value,5)))
+```
+
+Likelihood Ratio Test of Independence:
+```{r echo=FALSE,comment=NA}
+LR_data_age_decade_chf <- GTest(data_age_decade_chf)
+LR_data_age_decade_chf$statistic
+cat(paste("p-value =",round(LR_data_age_decade_chf$p.value,8)))
+```
+
 
 ## Alona
 
