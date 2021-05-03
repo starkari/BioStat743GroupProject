@@ -262,9 +262,180 @@ cat(paste("p-value =",round(LR_data_age_decade_chf$p.value,8)))
 ```
 
 
-## Alona
+## Alona: Examining the relationship between Duration of Arterial Hypertension and CHF
 
-Alona
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=5 ,paged.print=FALSE, fig.align = "center"}
+freqplot <- ggplot(data.work, aes(x = as.factor(ZSN), y = as.factor(DLIT_AG))) +
+  geom_count() +
+  labs(title = "", x = "", y="") + 
+  scale_x_discrete(labels = c("No", "Yes")) +
+  scale_y_discrete(labels = c("None","1","2","3","4","5","6-10",">=10")) 
+freqplot
+```
+
+## 
+* The two classes of CHF have similar count distributions across the levels of duration of arterial hypertension. 
+
+* We will further test the hypothesis that there is an association between the two variables
+
+## Inference for contigency table.
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+data.work.2 <- data.work %>% 
+  mutate(DLIT_AG_N = case_when(DLIT_AG==6 ~ 8,  
+                               DLIT_AG==7 ~ 10,
+                               DLIT_AG==1 ~ 1,
+                               DLIT_AG==2 ~ 2,
+                               DLIT_AG==3 ~ 3,
+                               DLIT_AG==4 ~ 4,
+                               DLIT_AG==5 ~ 5,
+                               DLIT_AG==0 ~ 0
+                               ))
+
+tab <- table(data.work.2$DLIT_AG,data.work.2$ZSN)
+dimnames(tab) <- list("Duration of AH"=c("None","1","2","3","4",
+                                         "5","6-10",">=10"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+
+# contingency table
+dlitag <- as.table(tab) 
+kable(dlitag,
+      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+
+```
+
+
+
+## Examining the Standerdized residuals.
+```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+# chisq test can be used but is less powerful than the two above.
+chisq <- round(chisq.test(dlitag)$statistic,3)
+#pval <- round(chisq.test(dlitag)$p.value,3)
+#lrt <- GTest(dlitag)
+std.res <- chisq.test(dlitag)$stdres
+
+# residual analysis
+mosaicplot(dlitag,
+           main = "",
+           xlab = "Duration of Arterial Hypertension",
+           ylab = "Chronic Heart Failure",
+           las = 1,
+           border = "chocolate",
+           shade = TRUE)
+
+```
+
+## 
+For Ix2 tables, testing for a linear trend in either response category, we use the Cochran-Armitage trend test. 
+
+```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm <- CochranArmitageTest(dlitag)
+coarm
+```
+
+Issues to consider: Ordinal variable with unequal intervals so trend test on the original classification provides information about the direction but ignores the unequal spacing in the last two categories.
+
+
+## Logistic Regression model
+x - Duration of Arterial Hypertension.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+x=c(0,1,2,3,4,5,8,10)
+yes=c(120,21,10,12,4,20,37,104)
+no=c(401,72,47,42,15,48,120,307)
+plotdata <- data.frame(x,yes, no)
+
+model.logit <- glm(cbind(yes, no) ~ x, family = binomial("logit"))
+infologit <- summary(model.logit)
+model.linear <- glm(cbind(yes, no) ~ x, family = binomial("identity"))
+infolinear <- summary(model.linear)
+model.probit <- glm(cbind(yes, no) ~ x, family = binomial("probit")) 
+infoprobit <- summary(model.probit)
+model.cloglog <- glm(cbind(yes, no) ~ x, family = binomial("cloglog"))
+infocloglog <- summary(model.cloglog)
+
+y_logit <- predict(model.logit, list(xval = plotdata$x), type="response")
+y_linear <- predict(model.linear, list(xval = plotdata$x), type="response")
+y_probit <- predict(model.probit, list(xval = plotdata$x), type="response")
+y_cloglog <- predict(model.cloglog, list(xval = plotdata$x), type="response")
+
+kable(infologit$coef, caption="Parameter Estimates for Logit link")
+kable(infolinear$coef, caption="Parameter Estiamtes for Identity link")
+#kable(modelinfo.cloglog$coef, caption="Parameter Estiamtes for cloglog link")
+```
+
+## Goodness of fit tests for the fitted models
+
+For the logit  model:
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+G.sq=deviance(model.logit)
+df.fit <- model.logit$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+```
+* $G^2$ = `r I(G.sq)`
+* df = `r I(df.fit)`
+* p-value = `r I(p.val)`
+
+For the linear model:
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+G.sq=deviance(model.linear)
+df.fit <- model.linear$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+```
+* $G^2$ = `r I(G.sq)`
+* df = `r I(df.fit)`
+* p-value = `r I(p.val)`
+
+## 
+Predicted probabilities for the fitted models and the observed data.
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(plotdata$x, plotdata$yes/(plotdata$yes +plotdata$no),
+     xlab="Duration of arterial hypertension", 
+     ylab="Probability of CHF", 
+     type = "p", pch=21, bg="black")
+points(plotdata$x, y_logit, pch=21, bg="blue")
+lines(plotdata$x, y_linear , col=2)
+#points(plotdata$x, y_probit , col=5)
+#points(plotdata$x, y_cloglog , col=5)
+legend("bottomright", legend=c("Logistic - Blue dots", "Linear - Red line","Observed data - Black dots"))
+```
+
+
+## Sub-analsis
+We tested the Linear model for the subset: Duration of arterial hypertension $\in[1 - 5]$
+ 
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+data.work.sub <- data.work.2 %>% 
+  filter(DLIT_AG_N %in% c(1,2,3,4,5))
+model <- glm(ZSN~DLIT_AG_N, data = data.work.sub, family = binomial("identity"))
+model.info <- summary(model)
+G.sq=deviance(model)
+df.fit <- model$df.residual
+p.val.sub=round((1-pchisq(G.sq,df.fit)),3)
+kable(model.info$coef, caption="Parameter Estiamtes for subset analysis")
+```
+
+## 
+Predicted probabilities
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, paged.print=FALSE}
+newdata <- data.frame(DLIT_AG_N=seq(min(data.work.sub$DLIT_AG_N), max(data.work.sub$DLIT_AG_N),len=23))
+newdata$ZSN <- predict(model, newdata=newdata, type="response")
+plot(ZSN~DLIT_AG_N, data=data.work.sub, col="black",
+     main = "Plot A",
+     ylab = "Predicted probability of CHF", 
+     xlab = "Duration of arterial hypertension")
+lines(ZSN~DLIT_AG_N, newdata, col="Blue", lwd=2)
+```
+The p-value for the goodness of fit went down sharply (`r I(p.val.sub)`) but still didn't reach significance level to reject the null of no-fit. 
+
+
+## Conclusions
+
+* There is no significant association between CHF and the duration of arterial hypertension.
+* By itself, duration of arterial hypertension is not predictive of CHF.
+
+
 
 ## Minsu
 
