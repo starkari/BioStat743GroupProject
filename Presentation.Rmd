@@ -615,7 +615,7 @@ grid.arrange(death.plot, cause.plot, nrow = 2)
 - Used stepwise step() to select the best model.
 - The best model selected:
 
-$log[P(death = 1)] = \beta_0 + \beta_1 \times age + \beta_3 \times I(IBS = 1) + \beta_4 \times I(IBS = 2) + \beta_5 \times I(SIM = 1) + beta_6 \times I(endocr01 = 1) + beta_7 \times I(endocr02 = 1)$
+$log[P(death = 1)] = \beta_0 + \beta_1 \times age + \beta_2 \times I(IBS = 1) + \beta_3 \times I(IBS = 2) + \beta_4 \times I(SIM = 1) + \beta_5 \times I(endocr01 = 1) + \beta_6 \times I(endocr02 = 1)$
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 # use stepwise selection to select variable
@@ -632,7 +632,7 @@ deviance(death.fit.logit) # 1018.906
 exp(death.fit.logit$coefficients)
 ```
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 kable(summary(death.mod)$coefficients, digits = 3) %>% kable_styling(font_size = 8)
 ```
 
@@ -680,7 +680,7 @@ $log \frac{\pi_j(x)}{\pi_J(x)} = \beta_{0j} + \beta_{1j} \times age + \beta_{2j}
 
 where J = cardiogenic shock, j = 1 pulmonary edema, 2 myocardial rupture, 3 progress of congestive heart failure, 4 thromboembolism, 5 asystole, 6 ventricular fibrillation
 
-```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 multi.mod <- multinom(LET_IS ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work3)
 ```
 
