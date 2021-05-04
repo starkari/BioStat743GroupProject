@@ -90,7 +90,7 @@ LR_data_age_chf
 ```
 
 
-
+ 
 
 
 
@@ -122,11 +122,115 @@ summary(death.fit)
 
 ## Minsu
 ```{r}
+data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_01.f <- factor(data.work$endocr_01, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_02.f <- factor(data.work$endocr_02, levels=c(0,1), labels = c("no","yes"))
+chf.dat <- select(data.work, AGE, SEX, IBS_POST, DLIT_AG, SIM.f, endocr_01.f, endocr_02.f, ZSN) 
+fit<- glm(ZSN ~ . , data=chf.dat, family=binomial)
+summary(fit)
+```
 
+We start by fitting a model containing all the 7 main effects,
+$$\text{logit}[P(Y=1)]=\alpha+\beta_1AGE+\beta_2SEX+\beta_3IBS\_POST+\beta_4DLIT\_AG+\beta_5SIM+\beta_6endocr\_01+\beta_7ndocr\_02,$$
+treating SIM_GIPERT, endocr_01, and endocr_01 as factors with indicator variables for "yes" for each attribute.  
+
+```{r}
+fit.0<- glm(ZSN ~ 1. , data=chf.dat, family=binomial)
+summary(fit.0)
+lr <- deviance(fit.0) - deviance(fit)
+df <- summary(fit.0)$df[2]-summary(fit)$df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+```
+
+The P-value for the overall test is much less than 0.0001, thus there is strong evidence that at least one predictor has an effect. Although the overall test is highly significant, Table 00 results shows that only AGE and endocr_01 seems significant in the Wald test. 
+
+We now fit a multiple logistic regression model by adding AGE and endocr_01 to the logistic regression model in subtopic 2, which used DLIT_AG (Duration of arterial hypertension) alone as a predictor.   
+
+```{r}
+fit.ini <- glm(ZSN~ DLIT_AG, data=chf.dat, family=binomial)
+fit.add <- glm(ZSN~ DLIT_AG + AGE + endocr_01.f, data=chf.dat, family=binomial)
+
+```
+```{r}
+G.sq=deviance(fit.add)
+df.fit <- fit.add$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+```
+
+The model has $G^2=1459.66$ with degree of freedom $df = 1377$ (P-value= 0.0597 > 0.05), which indicates a decent fit. 
+Comparing this additive model with the initial model with DLIT_AG only, 
+
+```{r}
+anova(fit.ini, fit.add)
+lr <- fit.ini$deviance - fit.add$deviance
+lr
+df <- anova(fit.ini, fit.add, test="LRT")$Df[2]
+df
+p.val <- 1 - pchisq(lr, df=df)
+p.val
 ```
 
 
+the likelihood ratios test statistic is 53.53 with degree of freedom 2, producing very tiny p-value (P<0.001). The model with AGE and endocr_01 in addition to DLIT_AG improves the goodness-of-fit. Next, we perform stepwise model selection through the forward and backward elimination methods to see if there is effect of interaction between predictors.  
+```{r}
+#Backward
+fit.3 <- glm(ZSN~ DLIT_AG* AGE * endocr_01.f, data=chf.dat, family=binomial)
+mod.back <- step(fit.3, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "backward")
+res.back <- mod.back$anova
+res.back 
+```
 
+```{r}
+#Forward
+fit.0 <- glm(ZSN ~ 1 , data=chf.dat, family=binomial)
+mod.for <- step(fit.0, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "forward")
+res.for <- mod.for$anova
+res.for 
+```
+Based on the AIC, both backward elimination and forward selection choose the model AGE + DLIT_AG * endocr_01.f. 
 
+```{r}
+fit.best <- glm(ZSN ~ AGE + DLIT_AG * endocr_01.f , data=chf.dat, family=binomial)
+summary(fit.best)
+summary(fit.best)$coef
+```
 
+We can find that not only the added predictors, AGE and endocr_01, but also the interaction between DLIT_AG and endocr_01.f
+are statistically significant, and  
+```{r}
+G.sq=deviance(fit.best)
+df.fit.best <- fit.best$df.residual
+p.val=1-pchisq(G.sq,df.fit.best)
+```
+this model with interaction term seems to fit well, as $G^2=1452.89$ with $df=1376$ (P-value = 0.073).
+
+```{r}
+lr <- fit.add$deviance - fit.best$deviance
+lr
+df <- anova(fit.ini, fit.best, test="LRT")$Df[2]
+df
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+```
+
+However, the likelihood ratios test statistic is 6.76 with df=3 (P-value=0.0799). The model with the interaction between AGE and DLIT_AG and endocr_01.f doesn't improve the goodness-of-fit.  
+As seen in Figure , their ROC curves are very close, thus we expect their performance for prediction will be almost same. 
+
+```{r}
+library(ROCR)
+pred1 <- prediction(fitted(fit.add), chf.dat$ZSN)
+stats1 <- performance(pred1, 'tpr', 'fpr')
+
+pred2 <- prediction(fitted(fit.best), chf.dat$ZSN)
+stats2 <- performance(pred2, 'tpr', 'fpr')
+
+mod1.lab <- expression('AGE'+'DLIT_AG'+'endocr_01')
+mod2.lab <- expression('AGE'+'DLIT_AG x endocr_01')
+
+plot(stats1@x.values[[1]], stats1@y.values[[1]], type='s', ylab=stats1@y.name, xlab=stats1@x.name, col='red', lwd=2)
+lines(stats2@x.values[[1]], stats2@y.values[[1]], type='s', col='blue', lty=2)
+abline(0,1, col='gray')
+legend('bottomright', c(mod1.lab, mod2.lab), col=c('red','blue'), lwd=c(2,1), lty=1:2, cex=.9, bty='n')
+```
 
