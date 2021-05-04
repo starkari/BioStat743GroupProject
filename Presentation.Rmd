@@ -1,9 +1,11 @@
 ---
-title: "Presentation"
-author: "Minsu Kim, Alona Muzikansky, Ariane Stark, Jadey Wu"
+title: "Chronic Heart Failure and Risk Factors in Myochardial Infarction Dataset"
+author: "Ariane, Alona, Minsu, and Jadey"
 output: 
-  beamer_presentation:
+   beamer_presentation:
     theme: "Madrid"
+    slide_level: 2
+    toc: FALSE
 
 ---
 
@@ -33,15 +35,63 @@ data.work <- na.omit(data.work)
 data.work <- filter(data.work, DLIT_AG != 10)
 ```
 
+# Introduction
 
-## Introduction 
+## Chronic heart failure (CHF)  
 
-Introduction text here
+According to CDC,
+
+\ \ 
+
+\begin{columns}[onlytextwidth,T]
+  \begin{column}{.45\linewidth}
+  \begin{itemize}
+    \item More than 6 million adults in the USA have heart failure.
+  \end{itemize}
+  \end{column}
+  \begin{column}{.45\linewidth}
+    \includegraphics[width=0.65\linewidth]{chf.jpg}
+  \end{column}
+\end{columns}
+
+\ \ 
+
+ \begin{columns}[onlytextwidth,T]
+  \begin{column}{.45\linewidth}
+  \begin{itemize}
+    \item About half of Americans (47\%) have at least one of key risk factors.
+  \end{itemize}
+  \end{column}
+  \begin{column}{.45\linewidth}
+    \includegraphics[width=0.6\linewidth]{causes.jpg}
+  \end{column}
+\end{columns}
+
+\begingroup
+\fontsize{5}{7}\selectfont
+(Figure(up): https://www.disability-benefits-help.org/resources/medical-evidence/chronic-heart-failure)
+(Figure(down):https://www.verywellhealth.com/heart-failure-causes-and-risk-factors-1746181)
+\endgroup
+
+
+## Topics to be covered
+
+**Question:** How are the predictors of our interest associated with Chronic heart failure?
+
+- Test independence of demographics with regards to CHF
+
+- Association of duration of arterial hypertension and CHF
+
+- Build a multiple logistic regression model by adding more predictors and identify the best model
+
+- Modeling the relationship between death outcome and selected variables
+
+# Dataset Overview
 
 ## Descriptive statistics
 
 - Demographic information
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center",fig.height=5.75}
 # distribution plots for single variable
 
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + 
@@ -88,7 +138,7 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
 
 ## Descriptive statistics
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center", fig.height=5.75}
 ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) + 
   geom_bar() + 
   labs(title = "IBS_POST", x = "type of CHD") +
@@ -139,9 +189,9 @@ chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) +
 grid.arrange(ibs.plot, duration.hist, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, nrow = 2)
 ```
 
+# Tests for Independence of Demographics
 
-
-## Ariane: Analysis of Sex and Chronic Heart Failure: Overview
+## Analysis of Sex and Chronic Heart Failure: Overview
 
 Question: Is there an association between sex and chronic heart failure?
 
@@ -261,8 +311,9 @@ LR_data_age_decade_chf$statistic
 cat(paste("p-value =",round(LR_data_age_decade_chf$p.value,8)))
 ```
 
+# Association of duration of arterial hypertension and CHF
 
-## Alona: Examining the relationship between Duration of Arterial Hypertension and CHF
+## Examining the relationship between Duration of Arterial Hypertension and CHF
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=5 ,paged.print=FALSE, fig.align = "center"}
 freqplot <- ggplot(data.work, aes(x = as.factor(ZSN), y = as.factor(DLIT_AG))) +
@@ -402,8 +453,8 @@ legend("bottomright", legend=c("Logistic - Blue dots", "Linear - Red line","Obse
 ```
 
 
-## Sub-analsis
-We tested the Linear model for the subset: Duration of arterial hypertension $\in[1 - 5]$
+## Sub-analysis
+We tested the Linear model for the subset: Duration of arterial hypertension between 1 and 5.
  
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 data.work.sub <- data.work.2 %>% 
@@ -436,12 +487,127 @@ The p-value for the goodness of fit went down sharply (`r I(p.val.sub)`) but sti
 * By itself, duration of arterial hypertension is not predictive of CHF.
 
 
+# Multiple Logistic Regression and Model Selection
 
-## Minsu
+## Multiple Logistic Regression
 
-Minsu
+- Coefficient estimates of the multiple logistic regressions of all predictors
+```{r echo=FALSE }
+data.work <- data.work %>% 
+  mutate(DLIT_AG_N = case_when(DLIT_AG==6 ~ 8,  
+                               DLIT_AG==7 ~ 10,
+                               DLIT_AG==0 ~ 0,
+                               DLIT_AG==1 ~ 1,
+                               DLIT_AG==2 ~ 2,
+                               DLIT_AG==3 ~ 3,
+                               DLIT_AG==4 ~ 4,
+                               DLIT_AG==5 ~ 5
+                               ))
+data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_01.f <- factor(data.work$endocr_01, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_02.f <- factor(data.work$endocr_02, levels=c(0,1), labels = c("no","yes"))
+chf.dat <- select(data.work, AGE, SEX, IBS_POST, DLIT_AG_N, SIM.f, endocr_01.f, endocr_02.f, ZSN) 
+fit<- glm(ZSN ~ . , data=chf.dat, family=binomial)
+kbl(summary(fit)$coefficients, digits = 5) 
+```
 
-## Jadey
+- Only AGE and endocr_01 are statistically significant.
+- The P-value for the overall test is much less than 0.0001, thus there is strong evidence that at least one predictor has an effect.
+
+## Multiple Logistic Regression - Goodness of Fit
+
+Fit a multiple logistic regression model by adding AGE and endocr_01 to the logistic regression model with only DLIT_AG:
+$$\text{logit}[P(ZSN=1)]=\alpha+\beta_1\,DLIT\_AG+\beta_2\,AGE+\beta_3\,endocr\_01.f.$$
+
+- Goodness of Fit
+
+```{r echo=FALSE}
+fit.ini <- glm(ZSN~ DLIT_AG_N, data=chf.dat, family=binomial)
+fit.add <- glm(ZSN~ DLIT_AG_N + AGE + endocr_01.f, data=chf.dat, family=binomial)
+
+G.sq=deviance(fit.add)
+df <- fit.add$df.residual
+p.value=1-pchisq(G.sq,df)
+
+tab1 <- c(G.sq, df, p.value)
+names(tab1) <- c("G.square", "df", "P-value")
+kable(t(tab1), escape=FALSE)
+```
+
+The model has $G^2=1459$ with degree of freedom $df = 1376$ (P-value= 0.059 > 0.05), which indicates a decent fit. 
+
+## Multiple Logistic Regression - ANOVA test
+
+Comparing this additive model with the initial model with DLIT_AG only, 
+
+- ANOVA Result
+
+```{r echo=FALSE}
+kable(anova(fit.ini, fit.add, test="LRT"), digits = 2)
+```
+the likelihood ratios test statistic is 53.73 with degree of freedom 2, producing very tiny p-value (P<0.001). Thus, the model with AGE and endocr_01 in addition to DLIT_AG improves the goodness-of-fit.
+
+
+## Multiple Logistic Regression - Model selection
+We perform stepwise model selection to see if there is effect of interaction between predictors.  
+
+- Backward selection
+
+```{r echo = FALSE}
+#Backward
+fit.3 <- glm(ZSN~ DLIT_AG_N* AGE * endocr_01.f, data=chf.dat, family=binomial)
+mod.back <- step(fit.3, scope=list(lower = ~ 1, upper = formula(fit.3)), 
+                 scale = 1, trace = F, direction = "backward")
+res.back <- mod.back$anova
+kable(res.back, digits = 3) %>% kable_styling(font_size = 8)
+```
+
+## Multiple Logistic Regression - Model selection
+
+- Forward selection
+
+```{r echo = FALSE}
+#Forward
+fit.0 <- glm(ZSN ~ 1 , data=chf.dat, family=binomial)
+mod.for <- step(fit.0, scope=list(lower = ~ 1, upper = formula(fit.3)), 
+                scale = 1, trace = F, direction = "forward")
+res.for <- mod.for$anova
+kable(res.for, digits = 3)%>% kable_styling(font_size = 8)
+```
+
+Based on the AIC, both backward elimination and forward selection choose the model of 
+\begin{align*}
+\text{logit}[P(ZSN=1)]=&\alpha+\beta_1\,DLIT\_AG+\beta_2\,AGE+\beta_3\,endocr\_01.f \\
+ &+\beta_4\,DLIT\_AG * endocr_01.f.
+\end{align*}
+
+## Predictive Power - ROC curves
+
+- ROC curves of the selected model with interaction and the additive model 
+
+```{r echo=FALSE, fig.cap = "ROC curves\\label{fig:rocplot}", fig.align='center', out.width = '80%'}
+fit.best <- glm(ZSN ~ AGE + DLIT_AG_N * endocr_01.f , data=chf.dat, family=binomial)
+library(ROCR)
+pred1 <- prediction(fitted(fit.add), chf.dat$ZSN)
+stats1 <- performance(pred1, 'tpr', 'fpr')
+
+pred2 <- prediction(fitted(fit.best), chf.dat$ZSN)
+stats2 <- performance(pred2, 'tpr', 'fpr')
+
+mod1.lab <- expression('AGE'+'DLIT_AG'+'endocr_01')
+mod2.lab <- expression('AGE'+'DLIT_AG x endocr_01')
+
+plot(stats1@x.values[[1]], stats1@y.values[[1]], type='s', 
+     ylab=stats1@y.name, xlab=stats1@x.name, col='red', lwd=2, lty=2)
+lines(stats2@x.values[[1]], stats2@y.values[[1]], type='s', col='blue', lwd=2, )
+abline(0,1, col='gray')
+legend('bottomright', c(mod1.lab, mod2.lab), col=c('red','blue'), 
+       lwd=c(2,1), lty=c(2,1), cex=.9, bty='n')
+```
+
+Their ROC curves are very close, thus we expect their performance for prediction will be almost same. 
+
+# Modeling the relationship between death outcome and selected variables 
 
 ## Secondary analysis - modeling the relationship between death outcome and selected variables 
 - The dataset includes one variable indicating the causes of lethal outcome for the patients
@@ -458,7 +624,7 @@ Minsu
 - Build model with multimonial response to investigate the cause of death
 
 ## Secondary analysis - modeling the relationship between death outcome and selected variables
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.height=5.75}
 data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
 #table(data.work2$death) # survive: 1212, dead: 191
@@ -575,4 +741,11 @@ Estimated $exp(\beta_{ij})$:
 print(exp(table))
 ```
 
+# Conclusion
 
+## 
+
+- Age and Sex are associated with CHF
+- Duration of Arterial Hypertension is predictive when included in a multivariate model
+- The final multivariable model for CHF is not rejected
+- Jadey
