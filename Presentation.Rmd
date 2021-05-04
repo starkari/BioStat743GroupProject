@@ -37,7 +37,7 @@ data.work <- filter(data.work, DLIT_AG != 10)
 
 # Introduction
 
-## Chronic heart failure  
+## Chronic heart failure (CHF)  
 
 According to CDC,
 
