@@ -1,9 +1,11 @@
 ---
-title: "Presentation"
-author: "Minsu Kim, Alona Muzikansky, Ariane Stark, Jadey Wu"
+title: "Chronic Heart Failure and Risk Factors in Myochardial Infarction Dataset"
+author: "Ariane, Alona, Minsu, and Jadey"
 output: 
-  beamer_presentation:
+   beamer_presentation:
     theme: "Madrid"
+    slide_level: 2
+    toc: FALSE
 
 ---
 
@@ -33,8 +35,9 @@ data.work <- na.omit(data.work)
 data.work <- filter(data.work, DLIT_AG != 10)
 ```
 
+# Introduction
 
-## Chronic heart failure  
+## Chronic heart failure (CHF)  
 
 According to CDC,
 
@@ -75,19 +78,20 @@ According to CDC,
 
 **Question:** How are the predictors of our interest associated with Chronic heart failure?
 
-- Test independence of variables in $2\times 2$ contingency tables
+- Test independence of demographics with regards to CHF
 
-- Fit a logistic linear regression model with a predictor and Chronic heart failure
+- Association of duration of arterial hypertension and CHF
 
 - Build a multiple logistic regression model by adding more predictors and identify the best model
 
-- Build a model to predict Chronic heart failure related death and check the model prediction accuracy
+- Modeling the relationship between death outcome and selected variables
 
+# Dataset Overview
 
 ## Descriptive statistics
 
 - Demographic information
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center",fig.height=5.75}
 # distribution plots for single variable
 
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + 
@@ -111,7 +115,7 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
 
 ## Descriptive statistics
 - Patient physiological attributes
-- IBS_POST: coronary heart disease in recen weeks before admission to hospital
+- IBS_POST: coronary heart disease in recent weeks before admission to hospital
   - 0: there was no CHD
   - 1: extertional angina pectoris
   - 2: unstable angina pectoris
@@ -134,7 +138,7 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
 
 ## Descriptive statistics
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center", fig.height=5.75}
 ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) + 
   geom_bar() + 
   labs(title = "IBS_POST", x = "type of CHD") +
@@ -174,7 +178,7 @@ obesity.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_02))) +
 
 chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) + 
   geom_bar() + 
-  labs(title = "ZSN", x = "CHD", y = "") + 
+  labs(title = "ZSN", x = "CHF", y = "") + 
   scale_x_discrete(labels = c("no", "yes")) +
   annotate("text", x = 2, y = 950, label = "no: 1052") +
   annotate("text", x = 2, y = 800, label = "yes: 328") 
@@ -183,9 +187,9 @@ chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) +
 grid.arrange(ibs.plot, duration.hist, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, nrow = 2)
 ```
 
+# Tests for Independence of Demographics
 
-
-## Ariane: Analysis of Sex and Chronic Heart Failure: Overview
+## Analysis of Sex and Chronic Heart Failure: Overview
 
 Question: Is there an association between sex and chronic heart failure?
 
@@ -305,8 +309,9 @@ LR_data_age_decade_chf$statistic
 cat(paste("p-value =",round(LR_data_age_decade_chf$p.value,8)))
 ```
 
+# Association of duration of arterial hypertension and CHF
 
-## Alona: Examining the relationship between Duration of Arterial Hypertension and CHF
+## Examining the relationship between Duration of Arterial Hypertension and CHF
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=5 ,paged.print=FALSE, fig.align = "center"}
 freqplot <- ggplot(data.work, aes(x = as.factor(ZSN), y = as.factor(DLIT_AG))) +
@@ -372,7 +377,7 @@ mosaicplot(dlitag,
 ## 
 For Ix2 tables, testing for a linear trend in either response category, we use the Cochran-Armitage trend test. 
 
-```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+```{r ,echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 # Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
 coarm <- CochranArmitageTest(dlitag)
 coarm
@@ -409,27 +414,7 @@ kable(infolinear$coef, caption="Parameter Estiamtes for Identity link")
 #kable(modelinfo.cloglog$coef, caption="Parameter Estiamtes for cloglog link")
 ```
 
-## Goodness of fit tests for the fitted models
 
-For the logit  model:
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-G.sq=deviance(model.logit)
-df.fit <- model.logit$df.residual
-p.val=1-pchisq(G.sq,df.fit)
-```
-* $G^2$ = `r I(G.sq)`
-* df = `r I(df.fit)`
-* p-value = `r I(p.val)`
-
-For the linear model:
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-G.sq=deviance(model.linear)
-df.fit <- model.linear$df.residual
-p.val=1-pchisq(G.sq,df.fit)
-```
-* $G^2$ = `r I(G.sq)`
-* df = `r I(df.fit)`
-* p-value = `r I(p.val)`
 
 ## 
 Predicted probabilities for the fitted models and the observed data.
@@ -438,7 +423,7 @@ plot(plotdata$x, plotdata$yes/(plotdata$yes +plotdata$no),
      xlab="Duration of arterial hypertension", 
      ylab="Probability of CHF", 
      type = "p", pch=21, bg="black")
-points(plotdata$x, y_logit, pch=21, bg="blue")
+points(plotdata$x, y_logit, pch=21, bg="lightgreen")
 lines(plotdata$x, y_linear , col=2)
 #points(plotdata$x, y_probit , col=5)
 #points(plotdata$x, y_cloglog , col=5)
@@ -446,8 +431,8 @@ legend("bottomright", legend=c("Logistic - Blue dots", "Linear - Red line","Obse
 ```
 
 
-## Sub-analsis
-We tested the Linear model for the subset: Duration of arterial hypertension $\in[1 - 5]$
+## Sub-analysis
+We tested the Linear probability model for the subset: Duration of arterial hypertension between 1 and 5.
  
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 data.work.sub <- data.work.2 %>% 
@@ -460,28 +445,10 @@ p.val.sub=round((1-pchisq(G.sq,df.fit)),3)
 kable(model.info$coef, caption="Parameter Estiamtes for subset analysis")
 ```
 
-## 
-Predicted probabilities
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, paged.print=FALSE}
-newdata <- data.frame(DLIT_AG_N=seq(min(data.work.sub$DLIT_AG_N), max(data.work.sub$DLIT_AG_N),len=23))
-newdata$ZSN <- predict(model, newdata=newdata, type="response")
-plot(ZSN~DLIT_AG_N, data=data.work.sub, col="black",
-     main = "Plot A",
-     ylab = "Predicted probability of CHF", 
-     xlab = "Duration of arterial hypertension")
-lines(ZSN~DLIT_AG_N, newdata, col="Blue", lwd=2)
-```
-The p-value for the goodness of fit went down sharply (`r I(p.val.sub)`) but still didn't reach significance level to reject the null of no-fit. 
-
-
-## Conclusions
-
-* There is no significant association between CHF and the duration of arterial hypertension.
-* By itself, duration of arterial hypertension is not predictive of CHF.
 
 
 
-## Minsu
+# Multiple Logistic Regression and Model Selection
 
 ## Multiple Logistic Regression
 
@@ -601,10 +568,9 @@ legend('bottomright', c(mod1.lab, mod2.lab), col=c('red','blue'),
 
 Their ROC curves are very close, thus we expect their performance for prediction will be almost same. 
 
+# Modeling the relationship between death outcome and selected variables 
 
-## Jadey
-
-## Secondary analysis - modeling the relationship between death outcome and selected variables 
+## Secondary analysis  
 - The dataset includes one variable indicating the causes of lethal outcome for the patients
   - LET_IS: causes of lethal outcome
     - 0: survive
@@ -618,8 +584,8 @@ Their ROC curves are very close, thus we expect their performance for prediction
 - Build a logistic regression model to predict death of the patients by turning LET_IS to a binary variable "death"
 - Build model with multimonial response to investigate the cause of death
 
-## Secondary analysis - modeling the relationship between death outcome and selected variables
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+## Secondary analysis
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.height=5.75}
 data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
 #table(data.work2$death) # survive: 1212, dead: 191
@@ -645,19 +611,12 @@ grid.arrange(death.plot, cause.plot, nrow = 2)
 
 
 ## Secondary analysis
-- Full model contains continuous variables AGE, DLIT_AG, categorical variables SEX, IBS_POST, SIM_GIPERT, endocr_01, endocr_02, and the interaction terms between AGE and all the other variables.
+- Full model contains continuous variables age, duration of arterial hypertension, categorical variables SEX, chronic heart disease duration before admission to hospital, systematic hypertension, diabetes, obesity, and the interaction terms between AGE and all the other variables.
 - Used stepwise step() to select the best model.
 - The best model selected:
 
-$log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times AGE + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$
+$log[P(death = 1)] = \beta_0 + \beta_1 \times age + \beta_3 \times I(IBS = 1) + \beta_4 \times I(IBS = 2) + \beta_5 \times I(SIM = 1) + beta_6 \times I(endocr01 = 1) + beta_7 \times I(endocr02 = 1)$
 
-- All selected predictors increase the probability of death. 
-  - exp(beta_age) = 1.06
-  - OR(IBS_POST = 1 vs. IBS_POST = 0) = 1.08 (p = 0.77 > 0.5)
-  - OR(IBS_POST = 2 vs. IBS_POST = 0) = 2.01
-  - OR(hypertension vs. non hypertension) = 2.07 (p = 0.065 > 0.5)
-  - OR(diabetes vs. non diabetes) = 1.61
-  - OR(obese vs. not obese) = 2.95
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 # use stepwise selection to select variable
 death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
@@ -674,7 +633,7 @@ exp(death.fit.logit$coefficients)
 ```
 
 ```{r}
-kable(summary(death.mod)$coefficients)
+kable(summary(death.mod)$coefficients, digits = 3) %>% kable_styling(font_size = 8)
 ```
 
 
@@ -717,7 +676,7 @@ ggplot() + aes(x = predicted, y = observed) + geom_point() + geom_line() + geom_
 
 ## Secondary analysis
 - Fit baseline category logit model on cause of death. Used predictors selected in the previous analysis. 
-$log \frac{\pi_j(x)}{\pi_J(x)} = \beta_{0j} + \beta_{1j} \times AGE + \beta_{2j} \times I(IBS = 1) + \beta_{3j} \times I(IBS = 2) + \beta_{4j} \times I(SIM = 1) + \beta_{5j} \times I(endocr01 = 1) + \beta_{6j} \times I(endocr02 = 1), j = 1, ..., 6$
+$log \frac{\pi_j(x)}{\pi_J(x)} = \beta_{0j} + \beta_{1j} \times age + \beta_{2j} \times I(IBS = 1) + \beta_{3j} \times I(IBS = 2) + \beta_{4j} \times I(SIM = 1) + \beta_{5j} \times I(endocr01 = 1) + \beta_{6j} \times I(endocr02 = 1), j = 1, ..., 6$
 
 where J = cardiogenic shock, j = 1 pulmonary edema, 2 myocardial rupture, 3 progress of congestive heart failure, 4 thromboembolism, 5 asystole, 6 ventricular fibrillation
 
@@ -733,13 +692,15 @@ colnames(table) <- c("intercept", "AGE", "IBS_POST = 1", "IBS_POST = 2", "SIM_GI
 
 ## Secondary analysis
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-print(table)
-```
-
-## Secondary analysis
-Estimated $exp(\beta_{ij})$:
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-print(exp(table))
+kable(table, digits = 3)  %>% kable_styling(font_size = 6)
 ```
 
 
+# Conclusion
+
+## 
+
+- Age and Sex are associated with CHF
+- Duration of Arterial Hypertension is predictive when included in a multivariate model
+- The final multivariable model for CHF is not rejected
+- Age, coranary heart disease in recent weeks, symptomatic hypertension, obesity and diabetes are associated with patient death.
