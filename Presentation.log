@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  4 MAY 2021 11:29
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  3 MAY 2021 23:03
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  4 MAY 2021 11:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -380,15 +376,12 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count277
-<<<<<<< HEAD
 Package hyperref Info: Option `unicode' set `true' on input line 4421.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2020/01/14 v7.00d Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-=======
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 Package hyperref Info: Option `bookmarks' set `true' on input line 4421.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 4421.
 Package hyperref Info: Option `implicit' set `false' on input line 4421.
@@ -609,7 +602,6 @@ Package: amsthm 2017/10/31 v2.20.4
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamerbasethemes.sty)) (
 /usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamerthemedefault.sty
 (/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamerfontthemedefault.sty
-<<<<<<< HEAD
 )
 (/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamercolorthemedefault.st
 y)
@@ -644,18 +636,6 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \pgfphysicalwidth=\dimen280
 \pgfpages@shipoutbox=\box73
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/lmodern.sty
-=======
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamercolorthemedefault.st
-y)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamerinnerthemedefault.st
-y
-\beamer@dima=\dimen275
-\beamer@dimb=\dimen276
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamerouterthemedefault.st
-y))) (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/lmodern.sty
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -693,18 +673,6 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
 ) (/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-<<<<<<< HEAD
-=======
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/base/fixltx2e.sty
-Package: fixltx2e 2016/12/29 v2.1a fixes to LaTeX (obsolete)
-Applying: [2015/01/01] Old fixltx2e package on input line 46.
-
-Package fixltx2e Warning: fixltx2e is not required with releases after 2015
-(fixltx2e)                All fixes are now in the LaTeX kernel.
-(fixltx2e)                See the latexrelease package for details.
-
-Already applied: [0000/00/00] Old fixltx2e package on input line 53.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1
@@ -715,11 +683,8 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks44
 \inpenc@posthook=\toks45
-<<<<<<< HEAD
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
-=======
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamerthemeMadrid.sty (/
 usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamercolorthemewhale.sty)
 (/usr/local/texlive/2020/texmf-dist/tex/latex/beamer/beamercolorthemeorchid.sty
@@ -730,7 +695,6 @@ y)
 sty)) (/usr/local/texlive/2020/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
-<<<<<<< HEAD
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2019/11/18 v2.7d Micro-typographical refinements (RS)
 \MT@toks=\toks46
@@ -739,33 +703,16 @@ LaTeX Info: Redefining \textls on input line 790.
 \MT@outer@kern=\dimen281
 LaTeX Info: Redefining \textmicrotypecontext on input line 1354.
 \MT@listname@count=\count320
-=======
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/textcomp.sty
-Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
-)) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2019/11/18 v2.7d Micro-typographical refinements (RS)
-\MT@toks=\toks46
-\MT@count=\count310
-LaTeX Info: Redefining \textls on input line 790.
-\MT@outer@kern=\dimen277
-LaTeX Info: Redefining \textmicrotypecontext on input line 1354.
-\MT@listname@count=\count311
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/microtype-pdftex.def
 File: microtype-pdftex.def 2019/11/18 v2.7d Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 914.
 LaTeX Info: Redefining \lslig on input line 914.
-<<<<<<< HEAD
 \MT@outer@space=\skip66
-=======
-\MT@outer@space=\skip63
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2019/11/18 v2.7d microtype main configuration file (RS)
-<<<<<<< HEAD
 )) (/usr/local/texlive/2020/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2020-01-22 v2.0d non-zero parskip adjustments
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/xurl/xurl.sty
@@ -775,82 +722,36 @@ Package: bookmark 2019/12/03 v1.28 PDF bookmarks (HO)
 (/usr/local/texlive/2020/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2019/12/03 v1.28 bookmark driver for pdfTeX (HO)
 \BKM@id=\count321
-)) (/usr/local/texlive/2020/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2020/01/13 v3.5 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count322
-\FV@InFile=\read3
-\FV@TabBox=\box74
-\c@FancyVerbLine=\count323
-\FV@StepNumber=\count324
-\FV@OutFile=\write5
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip67
-\fb@frw=\dimen282
-\fb@frh=\dimen283
-\FrameRule=\dimen284
-\FrameSep=\dimen285
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+)) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.de
+f
 File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count325
-\l__pdf_internal_box=\box75
-=======
-))
-Package hyperref Info: Option `breaklinks' set `true' on input line 34.
-(/usr/local/texlive/2020/texmf-dist/tex/latex/grffile/grffile.sty
-Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legac
-y)
-Package grffile Info: This package is an empty stub for compatibility on input 
-line 40.
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
-File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count312
-\l__pdf_internal_box=\box73
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+\l__kernel_color_stack_int=\count322
+\l__pdf_internal_box=\box74
 ) (./Presentation.aux
 
-LaTeX Warning: Label `tab:unnamed-chunk-17' multiply defined.
+LaTeX Warning: Label `tab:unnamed-chunk-18' multiply defined.
 
 )
 \openout1 = `Presentation.aux'.
 
-<<<<<<< HEAD
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 151.
-LaTeX Font Info:    ... okay on input line 151.
-=======
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -887,29 +788,16 @@ LaTeX Font Info:    ... okay on input line 80.
 
 (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-<<<<<<< HEAD
-\scratchcounter=\count326
-\scratchdimen=\dimen286
-\scratchbox=\box76
-\nofMPsegments=\count327
-\nofMParguments=\count328
+\scratchcounter=\count323
+\scratchdimen=\dimen282
+\scratchbox=\box75
+\nofMPsegments=\count324
+\nofMParguments=\count325
 \everyMPshowfont=\toks47
-\MPscratchCnt=\count329
-\MPscratchDim=\dimen287
-\MPnumerator=\count330
-\makeMPintoPDFobject=\count331
-=======
-\scratchcounter=\count313
-\scratchdimen=\dimen278
-\scratchbox=\box74
-\nofMPsegments=\count314
-\nofMParguments=\count315
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count316
-\MPscratchDim=\dimen279
-\MPnumerator=\count317
-\makeMPintoPDFobject=\count318
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+\MPscratchCnt=\count326
+\MPscratchDim=\dimen283
+\MPnumerator=\count327
+\makeMPintoPDFobject=\count328
 \everyMPtoPDFconversion=\toks48
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -919,13 +807,8 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 )) ABD: EveryShipout initializing macros
-<<<<<<< HEAD
-\AtBeginShipoutBox=\box77
-Package hyperref Info: Link coloring OFF on input line 151.
-=======
-\AtBeginShipoutBox=\box75
-Package hyperref Info: Link coloring OFF on input line 80.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+\AtBeginShipoutBox=\box76
+Package hyperref Info: Link coloring OFF on input line 111.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -935,115 +818,57 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-<<<<<<< HEAD
-\c@section@level=\count332
+\c@section@level=\count329
 )
-LaTeX Info: Redefining \ref on input line 151.
-LaTeX Info: Redefining \pageref on input line 151.
-LaTeX Info: Redefining \nameref on input line 151.
+LaTeX Info: Redefining \ref on input line 111.
+LaTeX Info: Redefining \pageref on input line 111.
+LaTeX Info: Redefining \nameref on input line 111.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 151.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 111.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 151.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 111.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 151.
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 111.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 151.
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 111.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 151.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 151.
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 111.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 151.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 151.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 151.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 111.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 151.
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 151.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 151.
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 111.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 151.
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 151.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 151.
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 111.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 151.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 151.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 111.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 151.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 111.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 151.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 151.
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 151.
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 151.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 151.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 111.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 151.
-=======
-\c@section@level=\count319
-)
-LaTeX Info: Redefining \ref on input line 80.
-LaTeX Info: Redefining \pageref on input line 80.
-LaTeX Info: Redefining \nameref on input line 80.
-(./Presentation.out) (./Presentation.out)
-\@outlinefile=\write5
-\openout5 = `Presentation.out'.
-
-LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 80.
-LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 80.
-LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 80.
-LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 80.
-\symnumbers=\mathgroup6
-\sympureletters=\mathgroup7
-LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 80.
-LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 80.
-LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 80.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 80.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 111.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/translator/translator-basic-dicti
 onary-English.dict
@@ -1069,22 +894,14 @@ Dictionary: translator-numbers-dictionary, Language: English
 tionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-<<<<<<< HEAD
-LaTeX Info: Redefining \microtypecontext on input line 151.
-=======
-LaTeX Info: Redefining \microtypecontext on input line 80.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+LaTeX Info: Redefining \microtypecontext on input line 111.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-<<<<<<< HEAD
-LaTeX Info: Redefining \showhyphens on input line 151.
-=======
-LaTeX Info: Redefining \showhyphens on input line 80.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+LaTeX Info: Redefining \showhyphens on input line 111.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -1093,11 +910,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 (./Presentation.nav)
-<<<<<<< HEAD
-Overfull \hbox (73.72925pt too wide) in paragraph at lines 151--151
-=======
-Overfull \hbox (73.72925pt too wide) in paragraph at lines 80--80
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+Overfull \hbox (73.72925pt too wide) in paragraph at lines 111--111
  [][][][]  
  []
 
@@ -1116,82 +929,46 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [2
 
 ]
-<<<<<<< HEAD
 <chf.jpg, id=41, 463.7325pt x 337.26pt>
 File: chf.jpg Graphic file (type jpg)
 <use chf.jpg>
-Package pdftex.def Info: chf.jpg  used on input line 194.
+Package pdftex.def Info: chf.jpg  used on input line 154.
 (pdftex.def)             Requested size: 100.11801pt x 72.81311pt.
 <causes.jpg, id=42, 415.5525pt x 342.27875pt>
 File: causes.jpg Graphic file (type jpg)
 <use causes.jpg>
-Package pdftex.def Info: causes.jpg  used on input line 194.
+Package pdftex.def Info: causes.jpg  used on input line 154.
 (pdftex.def)             Requested size: 92.41733pt x 76.12152pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-194.
-=======
-<chf.jpg, id=68, 463.7325pt x 337.26pt>
-File: chf.jpg Graphic file (type jpg)
-<use chf.jpg>
-Package pdftex.def Info: chf.jpg  used on input line 122.
-(pdftex.def)             Requested size: 100.11801pt x 72.81311pt.
-<causes.jpg, id=69, 415.5525pt x 342.27875pt>
-File: causes.jpg Graphic file (type jpg)
-<use causes.jpg>
-Package pdftex.def Info: causes.jpg  used on input line 122.
-(pdftex.def)             Requested size: 92.41733pt x 76.12152pt.
-LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-122.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+154.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-<<<<<<< HEAD
-94.
-=======
-22.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+54.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-<<<<<<< HEAD
-194.
-=======
-122.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+154.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-<<<<<<< HEAD
-194.
-=======
-122.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+154.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-<<<<<<< HEAD
-(Font)              <5> on input line 194.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 194
-=======
-(Font)              <5> on input line 122.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 122
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+(Font)              <5> on input line 154.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 154
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-<<<<<<< HEAD
-LaTeX Font Info:    Trying to load font information for U+msb on input line 194
-=======
-LaTeX Font Info:    Trying to load font information for U+msb on input line 122
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+LaTeX Font Info:    Trying to load font information for U+msb on input line 154
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1199,15 +976,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-<<<<<<< HEAD
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 194.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
 
-Overfull \vbox (4.53046pt too high) detected at line 194
+Overfull \vbox (4.53046pt too high) detected at line 154
  []
 
-=======
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 122.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
@@ -1230,21 +1003,13 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [5
 
 ]
-<<<<<<< HEAD
 <Presentation_files/figure-beamer/unnamed-chunk-2-1.pdf, id=68, 712.6625pt x 40
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-2-1.pdf, id=92, 712.6625pt x 40
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 5.515pt>
 File: Presentation_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (type
  pdf)
 <use Presentation_files/figure-beamer/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-2-1.pdf
-<<<<<<< HEAD
-  used on input line 226.
-=======
-  used on input line 155.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+  used on input line 186.
 (pdftex.def)             Requested size: 342.2916pt x 194.76872pt.
 
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
@@ -1268,21 +1033,13 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [8
 
 ]
-<<<<<<< HEAD
 <Presentation_files/figure-beamer/unnamed-chunk-3-1.pdf, id=100, 712.6625pt x 4
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-3-1.pdf, id=121, 712.6625pt x 4
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 05.515pt>
 File: Presentation_files/figure-beamer/unnamed-chunk-3-1.pdf Graphic file (type
  pdf)
 <use Presentation_files/figure-beamer/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-3-1.pdf
-<<<<<<< HEAD
-  used on input line 290.
-=======
-  used on input line 222.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+  used on input line 250.
 (pdftex.def)             Requested size: 342.2916pt x 194.76872pt.
 
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
@@ -1341,21 +1098,13 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [12
 
 ]
-<<<<<<< HEAD
 <Presentation_files/figure-beamer/unnamed-chunk-7-1.pdf, id=139, 716.6775pt x 4
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-7-1.pdf, id=156, 716.6775pt x 4
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 03.5075pt>
 File: Presentation_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (type
  pdf)
 <use Presentation_files/figure-beamer/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-7-1.pdf
-<<<<<<< HEAD
-  used on input line 339.
-=======
-  used on input line 273.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+  used on input line 299.
 (pdftex.def)             Requested size: 342.29535pt x 192.7209pt.
 
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
@@ -1412,21 +1161,13 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [18
 
 ]
-<<<<<<< HEAD
 <Presentation_files/figure-beamer/unnamed-chunk-13-1.pdf, id=193, 331.2375pt x 
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-13-1.pdf, id=204, 331.2375pt x 
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 173.64874pt>
 File: Presentation_files/figure-beamer/unnamed-chunk-13-1.pdf Graphic file (typ
 e pdf)
 <use Presentation_files/figure-beamer/unnamed-chunk-13-1.pdf>
 Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-13-1.pd
-<<<<<<< HEAD
-f  used on input line 426.
-=======
-f  used on input line 364.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+f  used on input line 386.
 (pdftex.def)             Requested size: 331.24678pt x 173.65361pt.
 
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
@@ -1450,31 +1191,29 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [21
 
 ]
-<<<<<<< HEAD
-<Presentation_files/figure-beamer/unnamed-chunk-15-1.pdf, id=224, 641.39626pt x
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-15-1.pdf, id=232, 641.39626pt x
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
- 402.50375pt>
-File: Presentation_files/figure-beamer/unnamed-chunk-15-1.pdf Graphic file (typ
-e pdf)
-<use Presentation_files/figure-beamer/unnamed-chunk-15-1.pdf>
-Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-15-1.pd
-<<<<<<< HEAD
-f  used on input line 473.
-(pdftex.def)             Requested size: 342.29704pt x 214.80612pt.
-=======
-f  used on input line 414.
-(pdftex.def)             Requested size: 332.05994pt x 208.3819pt.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
-
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [22
 
- <./Presentation_files/figure-beamer/unnamed-chunk-15-1.pdf>]
+]
+<Presentation_files/figure-beamer/unnamed-chunk-16-1.pdf, id=232, 641.39626pt x
+ 402.50375pt>
+File: Presentation_files/figure-beamer/unnamed-chunk-16-1.pdf Graphic file (typ
+e pdf)
+<use Presentation_files/figure-beamer/unnamed-chunk-16-1.pdf>
+Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-16-1.pd
+f  used on input line 463.
+(pdftex.def)             Requested size: 342.29704pt x 214.80612pt.
+
+Overfull \hbox (73.72925pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[23
+
+ <./Presentation_files/figure-beamer/unnamed-chunk-16-1.pdf>]
 \openout4 = `Presentation.vrb'.
 
 (./Presentation.vrb)
@@ -1482,56 +1221,38 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-[23
-
-]
-Overfull \hbox (73.72925pt too wide) has occurred while \output is active
- [][][][]  
- []
-
 [24
 
-pdfTeX warning (ext4): destination with the same identifier (name{tab:unnamed-c
-hunk-17}) has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-<<<<<<< HEAD
-l.526 \end{frame}
-                 ]
-<Presentation_files/figure-beamer/unnamed-chunk-18-1.pdf, id=254, 693.59125pt x
-=======
-l.470 \end{frame}
-                 ]
-<Presentation_files/figure-beamer/unnamed-chunk-18-1.pdf, id=259, 693.59125pt x
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
- 432.61626pt>
-File: Presentation_files/figure-beamer/unnamed-chunk-18-1.pdf Graphic file (typ
-e pdf)
-<use Presentation_files/figure-beamer/unnamed-chunk-18-1.pdf>
-Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-18-1.pd
-<<<<<<< HEAD
-f  used on input line 532.
-(pdftex.def)             Requested size: 342.30743pt x 213.5087pt.
-=======
-f  used on input line 477.
-(pdftex.def)             Requested size: 334.09477pt x 208.38617pt.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
-
+]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [25
 
- <./Presentation_files/figure-beamer/unnamed-chunk-18-1.pdf>]
+pdfTeX warning (ext4): destination with the same identifier (name{tab:unnamed-c
+hunk-18}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.516 \end{frame}
+                 ]
+<Presentation_files/figure-beamer/unnamed-chunk-19-1.pdf, id=263, 693.59125pt x
+ 432.61626pt>
+File: Presentation_files/figure-beamer/unnamed-chunk-19-1.pdf Graphic file (typ
+e pdf)
+<use Presentation_files/figure-beamer/unnamed-chunk-19-1.pdf>
+Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-19-1.pd
+f  used on input line 522.
+(pdftex.def)             Requested size: 342.30743pt x 213.5087pt.
+
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [26
 
-]
+ <./Presentation_files/figure-beamer/unnamed-chunk-19-1.pdf>]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1574,44 +1295,33 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [32
 
 ]
-<<<<<<< HEAD
-<Presentation_files/figure-beamer/unnamed-chunk-25-1.pdf, id=326, 693.59125pt x
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-25-1.pdf, id=323, 693.59125pt x
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
- 432.61626pt>
-File: Presentation_files/figure-beamer/unnamed-chunk-25-1.pdf Graphic file (typ
-e pdf)
-<use Presentation_files/figure-beamer/unnamed-chunk-25-1.pdf>
-Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-25-1.pd
-<<<<<<< HEAD
-f  used on input line 736.
-(pdftex.def)             Requested size: 273.84383pt x 170.80563pt.
-
-Overfull \vbox (41.40848pt too high) detected at line 736
-=======
-f  used on input line 689.
-(pdftex.def)             Requested size: 273.84383pt x 170.80563pt.
-
-Overfull \vbox (46.80847pt too high) detected at line 689
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
- []
-
-
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [33
 
- <./Presentation_files/figure-beamer/unnamed-chunk-25-1.pdf>]
+]
+<Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf, id=334, 693.59125pt x
+ 432.61626pt>
+File: Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (typ
+e pdf)
+<use Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf>
+Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-26-1.pd
+f  used on input line 726.
+(pdftex.def)             Requested size: 273.84383pt x 170.80563pt.
+
+Overfull \vbox (41.40848pt too high) detected at line 726
+ []
+
+
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [34
 
-]
+ <./Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf>]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1619,305 +1329,129 @@ Overfull \hbox (73.72925pt too wide) has occurred while \output is active
 [35
 
 ]
-<<<<<<< HEAD
-<Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf, id=361, 712.6625pt x 
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf, id=354, 712.6625pt x 
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
-393.47pt>
-File: Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (typ
-e pdf)
-<use Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf>
-Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-26-1.pd
-<<<<<<< HEAD
-f  used on input line 789.
-=======
-f  used on input line 737.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
-(pdftex.def)             Requested size: 342.2916pt x 188.98352pt.
-
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [36
 
- <./Presentation_files/figure-beamer/unnamed-chunk-26-1.pdf>]
+]
+<Presentation_files/figure-beamer/unnamed-chunk-27-1.pdf, id=369, 712.6625pt x 
+393.47pt>
+File: Presentation_files/figure-beamer/unnamed-chunk-27-1.pdf Graphic file (typ
+e pdf)
+<use Presentation_files/figure-beamer/unnamed-chunk-27-1.pdf>
+Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-27-1.pd
+f  used on input line 777.
+(pdftex.def)             Requested size: 342.2916pt x 188.98352pt.
+
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [37
 
-]
-<<<<<<< HEAD
-<Presentation_files/figure-beamer/unnamed-chunk-30-1.pdf, id=387, 712.6625pt x 
-495.8525pt>
-File: Presentation_files/figure-beamer/unnamed-chunk-30-1.pdf Graphic file (typ
-e pdf)
-<use Presentation_files/figure-beamer/unnamed-chunk-30-1.pdf>
-Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-30-1.pd
-f  used on input line 846.
-(pdftex.def)             Requested size: 200.75119pt x 139.67758pt.
-
+ <./Presentation_files/figure-beamer/unnamed-chunk-27-1.pdf>]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [38
 
- <./Presentation_files/figure-beamer/unnamed-chunk-30-1.pdf>]
-\openout4 = `Presentation.vrb'.
-
-(./Presentation.vrb)
-Overfull \vbox (29.28574pt too high) detected at line 879
- []
-
-=======
-<Presentation_files/figure-beamer/unnamed-chunk-31-1.pdf, id=375, 712.6625pt x 
+]
+<Presentation_files/figure-beamer/unnamed-chunk-32-1.pdf, id=392, 712.6625pt x 
 495.8525pt>
-File: Presentation_files/figure-beamer/unnamed-chunk-31-1.pdf Graphic file (typ
+File: Presentation_files/figure-beamer/unnamed-chunk-32-1.pdf Graphic file (typ
 e pdf)
-<use Presentation_files/figure-beamer/unnamed-chunk-31-1.pdf>
-Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-31-1.pd
-f  used on input line 799.
+<use Presentation_files/figure-beamer/unnamed-chunk-32-1.pdf>
+Package pdftex.def Info: Presentation_files/figure-beamer/unnamed-chunk-32-1.pd
+f  used on input line 837.
 (pdftex.def)             Requested size: 200.75119pt x 139.67758pt.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<<<<<<< HEAD
 [39
 
-]
-\openout4 = `Presentation.vrb'.
-
-(./Presentation.vrb
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ##   intercept         AGE IBS_POST = 1 IBS_POST = 2 SIM_G
-IPERT = 1 endocr_01 = 1[] 
- []
-
-
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ## 2 -5.208477  0.05003237    0.4172287   -0.2605801  -14.
-880228580     1.3482127[] 
- []
-
-
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ## 3 -2.662446  0.04515371   -0.8725386   -1.3250667   -0.
-012590414     0.2372437[] 
- []
-
-
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ## 4 -3.189649  0.02970654   -0.3969242   -0.7216065    0.
-004074119     1.1727607[] 
- []
-
-
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ## 5  1.046965 -0.03766681   -0.2262002   -1.5074724  -16.
-165192169     1.5726899[] 
- []
-
-
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ## 6 -2.551705  0.03088585   -2.0391936   -1.3081214  -16.
-883580258     0.8243099[] 
- []
-
-
-Overfull \hbox (123.35205pt too wide) in paragraph at lines 18--18
-[]\T1/lmtt/m/n/10.95 ## 7  2.872844 -0.05676433   -0.5333366   -0.2875964    0.
-257029070    -0.7257783[] 
- []
-=======
-[38
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
-
- <./Presentation_files/figure-beamer/unnamed-chunk-31-1.pdf>]
+ <./Presentation_files/figure-beamer/unnamed-chunk-32-1.pdf>]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<<<<<<< HEAD
 [40
 
 ]
-\openout4 = `Presentation.vrb'.
-
-(./Presentation.vrb
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ##      intercept       AGE IBS_POST = 1 IBS_POST = 2 SIM_
-GIPERT = 1 endocr_01 = 1[] 
- []
-
-
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ## 2  0.005469998 1.0513051    1.5177496    0.7706045   3.
-448251e-07     3.8505371[] 
- []
-
-
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ## 3  0.069777345 1.0461887    0.4178893    0.2657852   9.
-874885e-01     1.2677501[] 
- []
-
-
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ## 4  0.041186340 1.0301522    0.6723850    0.4859709   1.
-004082e+00     3.2309000[] 
- []
-
-
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ## 5  2.848990047 0.9630338    0.7975584    0.2214691   9.
-539953e-08     4.8195948[] 
- []
-
-
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ## 6  0.077948656 1.0313678    0.1301336    0.2703274   4.
-651085e-08     2.2803065[] 
- []
-
-
-Overfull \hbox (129.10078pt too wide) in paragraph at lines 20--20
-[]\T1/lmtt/m/n/10.95 ## 7 17.687253718 0.9448167    0.5866443    0.7500642   1.
-293083e+00     0.4839477[] 
- []
-
-)
-=======
-[39
-
-]
-Overfull \hbox (14.24077pt too wide) in paragraph at lines 842--842
+Overfull \hbox (14.24077pt too wide) in paragraph at lines 878--878
  [] 
  []
 
 
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<<<<<<< HEAD
 [41
-=======
-[40
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 
 ]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<<<<<<< HEAD
 [42
-=======
-[41
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 
 ]
 Overfull \hbox (73.72925pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<<<<<<< HEAD
 [43
-=======
-[42
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 
 ]
-\tf@nav=\write6
-\openout6 = `Presentation.nav'.
+\tf@nav=\write5
+\openout5 = `Presentation.nav'.
 
-\tf@toc=\write7
-\openout7 = `Presentation.toc'.
+\tf@toc=\write6
+\openout6 = `Presentation.toc'.
 
-\tf@snm=\write8
-\openout8 = `Presentation.snm'.
+\tf@snm=\write7
+\openout7 = `Presentation.snm'.
 
-<<<<<<< HEAD
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 942.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 942.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 900.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 900.
 (./Presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 942.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 942.
-=======
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 864.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 864.
-(./Presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 864.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 864.
-Package rerunfilecheck Info: File `Presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 84E6570DAF271E65179A46EA08902316;495.
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 900.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 900.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
-<<<<<<< HEAD
- 24415 strings out of 480608
- 448601 string characters out of 5903631
- 704285 words of memory out of 5000000
- 39575 multiletter control sequences out of 15000+600000
+ 23935 strings out of 480608
+ 441189 string characters out of 5903631
+ 694414 words of memory out of 5000000
+ 39108 multiletter control sequences out of 15000+600000
  586213 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  58i,15n,67p,886b,725s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
-texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
-20/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2020/texmf-dist/
-fonts/enc/dvips/lm/lm-mathit.enc}</usr/local/texlive/2020/texmf-dist/fonts/type
-=======
- 20265 strings out of 480608
- 389208 string characters out of 5903631
- 656018 words of memory out of 5000000
- 35492 multiletter control sequences out of 15000+600000
- 583218 words of font info for 71 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 58i,15n,67p,816b,706s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
 texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2020/t
 exmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2020/texmf-dist/
 fonts/enc/dvips/lm/lm-mathsy.enc}</usr/local/texlive/2020/texmf-dist/fonts/type
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 1/public/lm/lmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/l
 m/lmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss10.pf
 b></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss12.pfb></usr/lo
 cal/texlive/2020/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/local/texlive
-<<<<<<< HEAD
 /2020/texmf-dist/fonts/type1/public/lm/lmss9.pfb></usr/local/texlive/2020/texmf
 -dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2020/texmf-dist/fo
 nts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1
 /public/lm/lmsso8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm
-/lmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy8.pfb
-></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Presentation.pdf (43 pages, 356982 bytes).
+/lmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pf
+b>
+Output written on Presentation.pdf (43 pages, 350224 bytes).
 PDF statistics:
- 539 PDF objects out of 1000 (max. 8388607)
- 436 compressed objects within 5 object streams
- 134 named destinations out of 1000 (max. 500000)
+ 536 PDF objects out of 1000 (max. 8388607)
+ 434 compressed objects within 5 object streams
+ 135 named destinations out of 1000 (max. 500000)
  10424 words of extra memory for PDF output out of 12000 (max. 10000000)
-=======
-/2020/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2020/te
-xmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2020/texmf-dist/
-fonts/type1/public/lm/lmsso8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type
-1/public/lm/lmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/l
-m/lmtt10.pfb>
-Output written on Presentation.pdf (42 pages, 327599 bytes).
-PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 382 compressed objects within 4 object streams
- 97 named destinations out of 1000 (max. 500000)
- 8376 words of extra memory for PDF output out of 10000 (max. 10000000)
->>>>>>> 2c826c40f443b69dd65391889e9e6c19d0f21110
 
