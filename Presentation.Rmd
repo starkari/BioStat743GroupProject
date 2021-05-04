@@ -115,20 +115,20 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
 
 ## Descriptive statistics
 - Patient physiological attributes
-- IBS_POST: coronary heart disease in recen weeks before admission to hospital
-  - 0: there was no CHD
-  - 1: extertional angina pectoris
-  - 2: unstable angina pectoris
+- IBS_POST: coronary heart disease in recent weeks before admission to hospital
+    - 0: there was no CHD
+    - 1: extertional angina pectoris
+    - 2: unstable angina pectoris
 
 - DLIT_AG: duration of arterial hypertension
-  - 0: there was no arterial hypertension
-  - 1: one year
-  - 2: two years
-  - 3: three years
-  - 4: four years
-  - 5: five years
-  - 6: 6-10 years
-  - 7: more than 10 years
+    - 0: there was no arterial hypertension
+    - 1: one year
+    - 2: two years
+    - 3: three years
+    - 4: four years
+    - 5: five years
+    - 6: 6-10 years
+    - 7: more than 10 years
   
 ## Descriptive statistics  
 - SIM_GIPERT: systematic hypertension; 0 - no, 1 - yes
@@ -149,9 +149,7 @@ ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) +
 
 duration.hist <- ggplot(data.work, aes(data.work$DLIT_AG)) + 
   geom_histogram() + 
-  labs(title = "DLIT_AG", x = "years", y = "") +
-  annotate("text", x = 4, y = 450, label = "mean = 3.34") +
-  annotate("text", x = 4, y = 380, label = "median = 3") 
+  labs(title = "DLIT_AG", x = "years", y = "")
 #duration.hist
 
 hypertension.plot <- ggplot(data.work, aes(as.factor(data.work$SIM_GIPERT))) + 
@@ -180,7 +178,7 @@ obesity.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_02))) +
 
 chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) + 
   geom_bar() + 
-  labs(title = "ZSN", x = "CHD", y = "") + 
+  labs(title = "ZSN", x = "CHF", y = "") + 
   scale_x_discrete(labels = c("no", "yes")) +
   annotate("text", x = 2, y = 950, label = "no: 1052") +
   annotate("text", x = 2, y = 800, label = "yes: 328") 
@@ -348,13 +346,23 @@ dimnames(tab) <- list("Duration of AH"=c("None","1","2","3","4",
                                          "5","6-10",">=10"),
                       "Chronic Heart Failure"=c("No","Yes"))
 
+columnprops <- round(prop.table(tab, 2),3)
+rowprops <- round(prop.table(tab, 1),3)
+
 # contingency table
-dlitag <- as.table(tab) 
-kable(dlitag,
-      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+dlitag <- as.table(tab)
+#kable(dlitag,
+#      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+kable(columnprops,
+      caption= "column proportions")
 
 ```
 
+##
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+kable(rowprops,
+      caption= "Row proportions")
+```
 
 
 ## Examining the Standerdized residuals.
@@ -572,7 +580,7 @@ Their ROC curves are very close, thus we expect their performance for prediction
 
 # Modeling the relationship between death outcome and selected variables 
 
-## Secondary analysis - modeling the relationship between death outcome and selected variables 
+## Secondary analysis  
 - The dataset includes one variable indicating the causes of lethal outcome for the patients
   - LET_IS: causes of lethal outcome
     - 0: survive
@@ -586,7 +594,7 @@ Their ROC curves are very close, thus we expect their performance for prediction
 - Build a logistic regression model to predict death of the patients by turning LET_IS to a binary variable "death"
 - Build model with multimonial response to investigate the cause of death
 
-## Secondary analysis - modeling the relationship between death outcome and selected variables
+## Secondary analysis
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.height=5.75}
 data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
@@ -613,24 +621,18 @@ grid.arrange(death.plot, cause.plot, nrow = 2)
 
 
 ## Secondary analysis
-- Full model contains continuous variables AGE, DLIT_AG, categorical variables SEX, IBS_POST, SIM_GIPERT, endocr_01, endocr_02, and the interaction terms between AGE and all the other variables.
+- Full model contains continuous variables age, duration of arterial hypertension, categorical variables SEX, chronic heart disease duration before admission to hospital, systematic hypertension, diabetes, obesity, and the interaction terms between AGE and all the other variables.
 - Used stepwise step() to select the best model.
 - The best model selected:
 
-$log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times AGE + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$
+$log[P(death = 1)] = \beta_0 + \beta_1 \times age + \beta_2 \times I(IBS = 1) + \beta_3 \times I(IBS = 2) + \beta_4 \times I(SIM = 1) + \beta_5 \times I(endocr01 = 1) + \beta_6 \times I(endocr02 = 1)$
 
-- All selected predictors increase the probability of death. 
-  - exp(beta_age) = 1.06
-  - OR(IBS_POST = 1 vs. IBS_POST = 0) = 1.08 (p = 0.77 > 0.5)
-  - OR(IBS_POST = 2 vs. IBS_POST = 0) = 2.01
-  - OR(hypertension vs. non hypertension) = 2.07 (p = 0.065 > 0.5)
-  - OR(diabetes vs. non diabetes) = 1.61
-  - OR(obese vs. not obese) = 2.95
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 # use stepwise selection to select variable
 death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
 death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + DLIT_AG + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * factor(IBS_POST) + AGE * DLIT_AG + AGE * factor(SIM_GIPERT) + AGE * factor(endocr_01) + AGE * factor(endocr_02), data = data.work2, family = binomial)
-step(death.fit1, death.fit0, direction = "both", trace = F) # selected variable: AGE, IBS_POST, SIM_GIPERT, endocr_01, endocr_02
+death.mod <- step(death.fit1, death.fit0, direction = "both", trace = F) # selected variable: AGE, IBS_POST, SIM_GIPERT, endocr_01, endocr_02
+summary(death.mod)
 
 # fit the best model 
 death.fit.logit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial)
@@ -639,6 +641,11 @@ deviance(death.fit.logit) # 1018.906
 
 exp(death.fit.logit$coefficients)
 ```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+kable(summary(death.mod)$coefficients, digits = 3) %>% kable_styling(font_size = 8)
+```
+
 
 ## Secondary analysis
 
@@ -679,11 +686,11 @@ ggplot() + aes(x = predicted, y = observed) + geom_point() + geom_line() + geom_
 
 ## Secondary analysis
 - Fit baseline category logit model on cause of death. Used predictors selected in the previous analysis. 
-$log \frac{\pi_j(x)}{\pi_J(x)} = \beta_{0j} + \beta_{1j} \times AGE + \beta_{2j} \times I(IBS = 1) + \beta_{3j} \times I(IBS = 2) + \beta_{4j} \times I(SIM = 1) + \beta_{5j} \times I(endocr01 = 1) + \beta_{6j} \times I(endocr02 = 1), j = 1, ..., 6$
+$log \frac{\pi_j(x)}{\pi_J(x)} = \beta_{0j} + \beta_{1j} \times age + \beta_{2j} \times I(IBS = 1) + \beta_{3j} \times I(IBS = 2) + \beta_{4j} \times I(SIM = 1) + \beta_{5j} \times I(endocr01 = 1) + \beta_{6j} \times I(endocr02 = 1), j = 1, ..., 6$
 
 where J = cardiogenic shock, j = 1 pulmonary edema, 2 myocardial rupture, 3 progress of congestive heart failure, 4 thromboembolism, 5 asystole, 6 ventricular fibrillation
 
-```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 multi.mod <- multinom(LET_IS ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work3)
 ```
 
@@ -695,14 +702,9 @@ colnames(table) <- c("intercept", "AGE", "IBS_POST = 1", "IBS_POST = 2", "SIM_GI
 
 ## Secondary analysis
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-print(table)
+kable(table, digits = 3)  %>% kable_styling(font_size = 6)
 ```
 
-## Secondary analysis
-Estimated $exp(\beta_{ij})$:
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-print(exp(table))
-```
 
 # Conclusion
 
@@ -711,4 +713,4 @@ print(exp(table))
 - Age and Sex are associated with CHF
 - Duration of Arterial Hypertension is predictive when included in a multivariate model
 - The final multivariable model for CHF is not rejected
-- Jadey
+- Age, coranary heart disease in recent weeks, symptomatic hypertension, obesity and diabetes are associated with patient death.
