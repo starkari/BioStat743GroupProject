@@ -1,9 +1,11 @@
 ---
-title: "Presentation"
-author: "Minsu Kim, Alona Muzikansky, Ariane Stark, Jadey Wu"
+title: "Chronic Heart Failure and Risk Factors in Myochardial Infarction Dataset"
+author: "Ariane, Alona, Minsu, and Jadey"
 output: 
-  beamer_presentation:
+   beamer_presentation:
     theme: "Madrid"
+    slide_level: 2
+    toc: FALSE
 
 ---
 
@@ -33,6 +35,7 @@ data.work <- na.omit(data.work)
 data.work <- filter(data.work, DLIT_AG != 10)
 ```
 
+# Introduction
 
 ## Chronic heart failure  
 
@@ -75,19 +78,20 @@ According to CDC,
 
 **Question:** How are the predictors of our interest associated with Chronic heart failure?
 
-- Test independence of variables in $2\times 2$ contingency tables
+- Test independence of demographics with regards to CHF
 
-- Fit a logistic linear regression model with a predictor and Chronic heart failure
+- Association of duration of arterial hypertension and CHF
 
 - Build a multiple logistic regression model by adding more predictors and identify the best model
 
-- Build a model to predict Chronic heart failure related death and check the model prediction accuracy
+- Modeling the relationship between death outcome and selected variables
 
+# Dataset Overview
 
 ## Descriptive statistics
 
 - Demographic information
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center",fig.height=5.75}
 # distribution plots for single variable
 
 age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + 
@@ -134,7 +138,7 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
 
 ## Descriptive statistics
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align = "center", fig.height=5.75}
 ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) + 
   geom_bar() + 
   labs(title = "IBS_POST", x = "type of CHD") +
@@ -185,9 +189,9 @@ chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) +
 grid.arrange(ibs.plot, duration.hist, hypertension.plot, diabetes.plot, obesity.plot, chd.plot, nrow = 2)
 ```
 
+# Tests for Independence of Demographics
 
-
-## Ariane: Analysis of Sex and Chronic Heart Failure: Overview
+## Analysis of Sex and Chronic Heart Failure: Overview
 
 Question: Is there an association between sex and chronic heart failure?
 
@@ -307,8 +311,9 @@ LR_data_age_decade_chf$statistic
 cat(paste("p-value =",round(LR_data_age_decade_chf$p.value,8)))
 ```
 
+# Association of duration of arterial hypertension and CHF
 
-## Alona: Examining the relationship between Duration of Arterial Hypertension and CHF
+## Examining the relationship between Duration of Arterial Hypertension and CHF
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=5 ,paged.print=FALSE, fig.align = "center"}
 freqplot <- ggplot(data.work, aes(x = as.factor(ZSN), y = as.factor(DLIT_AG))) +
@@ -448,8 +453,8 @@ legend("bottomright", legend=c("Logistic - Blue dots", "Linear - Red line","Obse
 ```
 
 
-## Sub-analsis
-We tested the Linear model for the subset: Duration of arterial hypertension $\in[1 - 5]$
+## Sub-analysis
+We tested the Linear model for the subset: Duration of arterial hypertension between 1 and 5.
  
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 data.work.sub <- data.work.2 %>% 
@@ -482,8 +487,7 @@ The p-value for the goodness of fit went down sharply (`r I(p.val.sub)`) but sti
 * By itself, duration of arterial hypertension is not predictive of CHF.
 
 
-
-## Minsu
+# Multiple Logistic Regression and Model Selection
 
 ## Multiple Logistic Regression
 
@@ -603,8 +607,7 @@ legend('bottomright', c(mod1.lab, mod2.lab), col=c('red','blue'),
 
 Their ROC curves are very close, thus we expect their performance for prediction will be almost same. 
 
-
-## Jadey
+# Modeling the relationship between death outcome and selected variables 
 
 ## Secondary analysis - modeling the relationship between death outcome and selected variables 
 - The dataset includes one variable indicating the causes of lethal outcome for the patients
@@ -621,7 +624,7 @@ Their ROC curves are very close, thus we expect their performance for prediction
 - Build model with multimonial response to investigate the cause of death
 
 ## Secondary analysis - modeling the relationship between death outcome and selected variables
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.height=5.75}
 data.work2 <- data.work
 data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
 #table(data.work2$death) # survive: 1212, dead: 191
@@ -738,4 +741,8 @@ Estimated $exp(\beta_{ij})$:
 print(exp(table))
 ```
 
+# Conclusion
 
+## 
+
+text 
