@@ -1,0 +1,405 @@
+---
+title: "Workfile"
+author: "Group"
+output: pdf_document
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+data <- read.csv("Data/initial_table.csv")
+#mean(data$AGE, na.rm = T)
+data.work <- dplyr::select(data, ID, AGE, SEX, IBS_POST, DLIT_AG, SIM_GIPERT, endocr_01, endocr_02, ZSN, LET_IS) 
+data.work <- na.omit(data.work)
+data.work <- filter(data.work, DLIT_AG != 10)
+dim(data.work) # obs = 1380
+# exploratory analysis
+mean(data.work$AGE) #61.397
+median(data.work$AGE) # 62
+table(data.work$SEX) # female(0): 502, male(1): 878
+table(data.work$IBS_POST) # no CHD(0): 353, exertional angina pectoris(1):443, unstable angina pectoris(2):584
+mean(data.work$DLIT_AG) # 3.34
+median(data.work$DLIT_AG) # 3
+median(data.work$DLIT_AG) # 3
+table(data.work$SIM_GIPERT) # no(0): 1336, yes(1): 44
+table(data.work$endocr_01) # no(0): 1193, yes(1):187
+table(data.work$endocr_02) # no(0): 1348, yes(1):32
+table(data.work$ZSN) # no(0): 1052, yes(1): 328
+# distribution plots for single variable
+age.hist <- ggplot(data.work, aes(data.work$AGE)) + geom_histogram() + labs(title = "age distribution", x = "age")
+age.hist
+sex.plot <- ggplot(data.work, aes(as.factor(data.work$SEX))) + geom_bar() + labs(title = "distribution of sex", x = "sex") + scale_x_discrete(labels = c("female", "male"))
+sex.plot
+ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) + geom_bar() + labs(title = "distribution of CHD in recent weeks", x = "type of CHD") + scale_x_discrete(labels = c("no CHD", "extertional angina pectoris", "unstable angina pectoris"))
+ibs.plot
+duration.hist <- ggplot(data.work, aes(data.work$DLIT_AG)) + geom_histogram() + labs(title = "duration of arterial hypertension", x = "years")
+duration.hist
+hypertension.plot <- ggplot(data.work, aes(as.factor(data.work$SIM_GIPERT))) + geom_bar() + labs(title = "distribution of hypertension", x = "hypertension") + scale_x_discrete(labels = c("no", "yes"))
+hypertension.plot
+diabetes.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_01))) + geom_bar() + labs(title = "distribution of diabetes", x = "diabetes") + scale_x_discrete(labels = c("no", "yes"))
+diabetes.plot
+obesity.plot <- ggplot(data.work, aes(as.factor(data.work$endocr_02))) + geom_bar() + labs(title = "distribution of obesity", x = "obesity") + scale_x_discrete(labels = c("no", "yes"))
+obesity.plot
+chd.plot <- ggplot(data.work, aes(as.factor(data.work$ZSN))) + geom_bar() + labs(title = "distribution of CHD", x = "CHD") + scale_x_discrete(labels = c("no", "yes"))
+chd.plot
+```
+
+
+
+```{r}
+names(data)
+```
+
+
+## Ariane
+Exploring relationship between age and CHD
+```{r}
+library("DescTools")
+library(tidyverse)
+#sex and chronic heart failure
+data_sex_chf <- table(data.work$SEX,data.work$ZSN)
+dimnames(data_sex_chf) <- list(Sex=c("Female","Male"),         
+                       "Chronic Heart Failure"=c("No","Yes"))
+data_sex_chf
+chi_sq_data_sex_chf <-chisq.test(data_sex_chf)
+chi_sq_data_sex_chf
+LR_data_sex_chf <- GTest(data_sex_chf)
+LR_data_sex_chf
+```
+With the p-value<0.01 we reject the null and conclude there is an association between Sex and chronic heart failure
+
+```{r}
+# age and chronic heart failure
+data_age_chf <- table(data.work$AGE,data.work$ZSN)
+dimnames(data_age_chf) <- list(Age = names(data_age_chf[,1]),
+                               "Chronic Heart Failure"=c("No","Yes"))
+#data_age_chf
+boxplot_age_chf <- data.work %>% 
+  ggplot() +
+  geom_boxplot(mapping = aes(x=AGE, y=as.factor(ZSN), 
+                             group = as.factor(ZSN))) +
+  ylab("Chronic Heart Failure") +
+  scale_y_discrete(labels=c("No","Yes"))
+boxplot_age_chf
+#CHF NO
+summary(data.work %>% 
+          filter(ZSN==0) %>% 
+          select(AGE))
+#CHF YES
+summary(data.work %>% 
+          filter(ZSN==1) %>% 
+          select(AGE))
+wilcox.test(data.work$AGE[which(data.work$ZSN == 0)],
+            data.work$AGE[which(data.work$ZSN == 1)])
+```
+Results from Wilcoxon Rank Sum test rejects the null with the p-value <0.01 and concludes there is a difference and age between outcomes
+
+```{r}
+#look at age categorically by decade
+age_decade <- data.work %>% 
+  mutate(decade = floor(AGE/10)*10) %>% 
+  select(decade)
+data_age_decade_chf <- table(age_decade$decade,data.work$ZSN)
+dimnames(data_age_decade_chf) <- 
+  list(Age = paste0(names(data_age_decade_chf[,1]),"s"),
+                               "Chronic Heart Failure"=c("No","Yes"))
+data_age_decade_chf
+chi_sq_data_age_decade_chf <-chisq.test(data_age_decade_chf)
+chi_sq_data_age_decade_chf
+LR_data_age_decade_chf <- GTest(data_age_decade_chf)
+LR_data_age_decade_chf
+```
+Using the age by decade we have a p-value<0.01 which like the wilcoxon test suggest an association between age an chronic heart failure due to the rejection of the null
+
+## Alona
+Exploring the relationship between CHF and Duration of arterial hypertension.
+```{r}
+library(knitr)
+library(tidyverse)
+library(vcdExtra, quietly = TRUE)
+library("DescTools")
+library("ResourceSelection")
+# Duration of arterial hypertension (DLIT_AG): Ordinal 
+freq.dlitag <- data.work %>%
+  group_by(DLIT_AG) %>% 
+  dplyr::summarize(n = n()) %>%
+  mutate(freq = n/sum(n))
+freq.dlitag
+ggplot(data.work, aes(x = as.factor(ZSN), y = DLIT_AG)) +
+  geom_count()
+```
+
+The two classes of CHF have similar distribution of proportions across the level of duration of arterial hypertension. We will further test the hypothesis that theres is an association between the two variables. 
+
+```{r}
+# removing category 10 which is likely a mistake.
+data.work.2 <- data.work %>%
+  filter(DLIT_AG != 10)
+data.work.3 <- data.work %>% 
+  mutate(DLIT_AG_N = case_when(DLIT_AG==6 ~ 8,  
+                               DLIT_AG==7 ~ 10,
+                               DLIT_AG==1 ~ 1,
+                               DLIT_AG==2 ~ 2,
+                               DLIT_AG==3 ~ 3,
+                               DLIT_AG==4 ~ 4,
+                               DLIT_AG==5 ~ 5
+                               ))
+mean(data.work.2$DLIT_AG) # 3.36
+median(data.work.2$DLIT_AG) #3
+tab <- table(data.work.2$DLIT_AG,data.work.2$ZSN)
+dimnames(tab) <- list("Duration of AH"=c("None","1-year","2-years","3-years","4-years",
+                                         "5-years","6-10 years",">=10 years"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+tab2 <- table(data.work.3$DLIT_AG_N,data.work.3$ZSN)
+# contingency table
+dlitag <- as.table(tab) 
+kable(dlitag,
+      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+```
+
+Duration of Arterial Hypertension is an ordinal type variable. we therefore use ordinal trend tests 
+```{r}
+#Ordinal trend test
+gamma.test <- GKgamma(dlitag)
+pvalg=2*pnorm(q=gamma.test$gamma/gamma.test$sigma, lower.tail=FALSE)
+pvalg
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm <- CochranArmitageTest(dlitag)
+coarm
+# chisq test can be used but is less powerful than the two above.
+chisq <- round(chisq.test(dlitag)$statistic,3)
+#pval <- round(chisq.test(dlitag)$p.value,3)
+#lrt <- GTest(dlitag)
+std.res <- chisq.test(dlitag)$stdres
+# all p-values from all test are confirming the finding that there is no relationship between 
+# duration of arterial hypertension and chronic heart failure
+# residual analysis
+# this is just a cool plot - unfortunately nothing is significant so there is no color.
+mosaicplot(dlitag,
+           main = "",
+           xlab = "Duration of Arterial Hypertension",
+           ylab = "Chronic Heart Failure",
+           las = 1,
+           border = "chocolate",
+           shade = TRUE)
+```
+All tests have non-significant p-value (>0.2) which suggest that we do not reject the null of no association.
+
+```{r}
+# Logistic regression models for Chronic heart failure - ZSN as a function of DLIT_AG
+# canonical link
+fit.dlit.l <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial)
+summary(fit.dlit.l)
+# fit.dlitn.l <- glm(ZSN ~ DLIT_AG_N, data=data.work.3, family=binomial)
+# summary(fit.dlitn.l)
+# cloglog link
+fit.dlit.cll <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="cloglog"))
+summary(fit.dlit.cll)
+# identity link
+fit.dlit.i <- glm(ZSN ~ DLIT_AG, data=data.work.2, family=binomial(link="identity"))
+summary(fit.dlit.i)
+#goodness of fit
+G.sq=deviance(fit.dlit.l)
+df.fit <- fit.dlit.l$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+p.val
+newdata <- data.frame(DLIT_AG=seq(min(data.work.2$DLIT_AG), max(data.work.2$DLIT_AG),len=23))
+newdata$ZSN <- predict(fit.dlit.l, newdata=newdata, type="response")
+plot(ZSN~DLIT_AG, data=data.work.2, col="black",
+     main = "Plot A",
+     ylab = "Predicted probability of CHF", 
+     xlab = "Duration of arterial hypertension")
+lines(ZSN~DLIT_AG, newdata, col="Blue", lwd=2)
+```
+The logistic regression model for CHF as explained by duration of arterial hypertension is not predictive. The predicted probabilities are effectively constant and the goodness of fit value is
+`r I(p.val)` suggesting we reject the null of the model fitting the data.
+
+
+```{r include=FALSE}
+# consider other representations of the predictor variable.
+# dichotomizing at the median - to assess the U shaped distribution factor of DLIT_AG
+data.work.2$DLIT_AG_BIN <- ifelse(data.work.2$DLIT_AG>=3, 1, 0)
+data.work.2$DLIT_AG_BIN2 <- ifelse(data.work.2$DLIT_AG>=1, 1, 0)
+tab2 <- table(data.work.2$DLIT_AG_BIN,data.work.2$ZSN)
+dimnames(tab2) <- list("Duration of AH" = c("<3",">=3"),
+                       "Chronic Heart Failure"=c("No","Yes"))
+tab2a <- table(data.work.2$DLIT_AG_BIN2,data.work.2$ZSN)
+dimnames(tab2a) <- list("Duration of AH" = c("0",">0"),
+                       "Chronic Heart Failure"=c("No","Yes"))
+dlitag2 <- as.table(tab2) 
+kable(dlitag2)
+dlitag2a <- as.table(tab2a) 
+kable(dlitag2a)
+# contingency tables
+chisq2 <- round(chisq.test(dlitag2)$statistic,3)
+pval2 <- round(chisq.test(dlitag2)$p.value,3)
+pval2
+lrt2 <- GTest(dlitag2)
+std.res2 <- chisq.test(dlitag2)$stdres
+chisq2a <- round(chisq.test(dlitag2a)$statistic,3)
+pval2a <- round(chisq.test(dlitag2a)$p.value,3)
+pval2a
+lrt2a <- GTest(dlitag2a)
+std.res2a <- chisq.test(dlitag2a)$stdres
+```
+Considering the U shaped distribution of the variable, We also conducted the analysis for the dichotomized (at the median) variable. The results were no different than in the original form.
+We also evaluated if a binary cut of the duration of arterial hypertension to no arterial hypertension (category of 0) vs. duration of arterial hypertension > 0 has more meaningful association with CHF and here too, the results were not different.
+
+
+```{r include=FALSE}
+# we consider using values that are strictly greater than 0 since 0 has no duration value.
+# analysis excluding no arterial hypertension
+data.sub <- data.work.3 %>% 
+  filter(DLIT_AG_N !=0)
+tab3 <- table(data.sub$DLIT_AG_N,data.sub$ZSN)
+dimnames(tab3) <- list("Duration of AH" = c("1 year","2 years","3 years","4 years",
+                                           "5 years","6-10 years",">=10 years"),
+                      "Chronic Heart Failure"=c("No","Yes"))
+dlitag3 <- as.table(tab3)
+#Ordinal trend test
+gamma.test.2 <- GKgamma(dlitag3)
+pvalg2=2*pnorm(q=gamma.test.2$gamma/gamma.test.2$sigma, lower.tail=FALSE)
+pvalg2
+# Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
+coarm2 <- CochranArmitageTest(dlitag3)
+coarm2
+```
+In conclusion, the variable of duration of arterial hypertension by itself is not associated with the outcome of chronic heart failure. This ordinal variable was tested in the original form - with equally spaced categories - and was also evaluated with an adjustment of score assignment for the last two categories (that are not one-to-one mapping of name to value)
+
+
+## Minsu
+Build a multivariable logistic regression model, identifying the best model, and calculating predictive power of the model.
+```{r}
+#fit a model with all 7 predictors
+data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_01.f <- factor(data.work$endocr_01, levels=c(0,1), labels = c("no","yes"))
+data.work$endocr_02.f <- factor(data.work$endocr_02, levels=c(0,1), labels = c("no","yes"))
+chf.dat <- select(data.work, AGE, SEX, IBS_POST, DLIT_AG, SIM.f, endocr_01.f, endocr_02.f, ZSN) 
+fit<- glm(ZSN ~ . , data=chf.dat, family=binomial)
+summary(fit)
+#overall test for model with 7 predictors
+fit.0<- glm(ZSN ~ 1. , data=chf.dat, family=binomial)
+summary(fit.0)
+lr <- deviance(fit.0) - deviance(fit)
+df <- summary(fit.0)$df[2]-summary(fit)$df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+```
+There is strong evidence that at least one predictor has an effect. Although the overall test is highly significant, summary(fit) results show that only AGE and endocr_01 seems significant in the Wald test. 
+
+```{r}
+#add AGE and endocr_01 to the logistic model in subtopic 2. 
+fit.ini <- glm(ZSN~ DLIT_AG, data=chf.dat, family=binomial)
+fit.add <- glm(ZSN~ DLIT_AG + AGE + endocr_01.f, data=chf.dat, family=binomial)
+#goodnes of fit
+G.sq=deviance(fit.add)
+df.fit <- fit.add$df.residual
+p.val=1-pchisq(G.sq,df.fit)
+#compare this additive model with the initial model with only DLIT_AG
+anova(fit.ini, fit.add)
+lr <- fit.ini$deviance - fit.add$deviance
+df <- anova(fit.ini, fit.add, test="LRT")$Df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+```
+The model with AGE and endocr_01 in addition to DLIT_AG improves the goodness-of-fit. Next, we perform stepwise model selection through the forward and backward elimination methods to see if there is effect of interaction between predictors. 
+
+```{r}
+#Backward selection
+fit.3 <- glm(ZSN~ DLIT_AG* AGE * endocr_01.f, data=chf.dat, family=binomial)
+mod.back <- step(fit.3, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "backward")
+res.back <- mod.back$anova
+res.back 
+#Forward selection
+fit.0 <- glm(ZSN ~ 1 , data=chf.dat, family=binomial)
+mod.for <- step(fit.0, scope=list(lower = ~ 1, upper = formula(fit.3)), scale = 1, trace = T, direction = "forward")
+res.for <- mod.for$anova
+res.for 
+#fit the best model
+fit.best <- glm(ZSN ~ AGE + DLIT_AG * endocr_01.f , data=chf.dat, family=binomial)
+summary(fit.best)
+#goodness of fit
+G.sq=deviance(fit.best)
+df.fit.best <- fit.best$df.residual
+p.val=1-pchisq(G.sq,df.fit.best)
+#compare this best model with the additive model 
+lr <- fit.add$deviance - fit.best$deviance
+df <- anova(fit.ini, fit.best, test="LRT")$Df[2]
+p.val <- 1 - pchisq(lr, df=df)
+p.val
+#predictive power using ROC curve
+library(ROCR)
+pred1 <- prediction(fitted(fit.add), chf.dat$ZSN)
+val1 <- performance(pred1, 'tpr', 'fpr')
+pred2 <- prediction(fitted(fit.best), chf.dat$ZSN)
+val2 <- performance(pred2, 'tpr', 'fpr')
+lab1 <- expression('AGE'+'DLIT_AG'+'endocr_01')
+lab2 <- expression('AGE'+'DLIT_AG x endocr_01')
+plot(val1@x.values[[1]], val1@y.values[[1]], type='s', ylab=val1@y.name, xlab=val1@x.name, col='red', lwd=2)
+lines(val2@x.values[[1]], val2@y.values[[1]], type='s', col='blue', lty=2)
+abline(0,1, col='gray')
+legend('bottomright', c(lab1, lab2), col=c('red','blue'), lwd=c(2,1), lty=1:2, cex=.9, bty='n')
+```
+The model with the interaction between AGE and DLIT_AG and endocr_01.f doesn't improve the goodness-of-fit.  
+As seen in the ROC Figure, their ROC curves are very close, thus we expect their performance for prediction will be almost same. 
+
+## Jadey
+Build a mutivariable logistic regression model to predict the death of the cohort and check model prediction accuracy.
+```{r}
+data.work2 <- data.work
+data.work2$death <- ifelse(data.work$LET_IS == 0, 0, 1)
+table(data.work2$death) # survive: 1212, dead: 191
+ggplot(data.work, aes(as.factor(data.work2$death))) + geom_bar() + labs(title = "distribution of death", x = "death") + scale_x_discrete(labels = c("no", "yes"))
+# use stepwise selection to select variable
+death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
+death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + DLIT_AG + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * IBS_POST + AGE * DLIT_AG + AGE * SIM_GIPERT + AGE * endocr_01 + AGE * endocr_02, data = data.work2, family = binomial)
+step(death.fit1, death.fit0, direction = "both") # selected variable: AGE, IBS_POST, SIM_GIPERT, endocr_01, endocr_02
+# fit the best model 
+death.fit.logit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial)
+deviance(death.fit.logit) # 1018.906
+# Hosmer-Lemeshow test to check goodness of fit
+library("ResourceSelection")
+death.pred <- predict(death.fit.logit, data.work2, type = "response")
+hoslem.test(data.work2$death, death.pred, g = 20) # p = 0.4291, fail to reject H0
+## Get indices of vector fit, from smallest to greatest
+fit <- death.fit.logit$fitted.values
+index <- sort.list(fit)
+## check 10 smallest indices
+index[1:10]
+## create a matrix of death and fit, using this index
+hosmer <- matrix(c(data.work2$death[index], fit[index]), byrow = F, nrow = nrow(data.work2))
+head(hosmer)
+## group into 20 groups with 69 observations per group
+observed <- rep(NA, 20)
+for (i in 1:20){ observed[i] <- sum(hosmer[(69*(i-1) +1) : (69 *i), 1])/ 69 }
+observed
+# repeat the previous step for the predicted probability
+predicted <- rep(NA, 20)
+for (i in 1:20){ predicted[i] <- sum(hosmer[(69*(i-1) +1) : (69 *i), 2])/ 69 }
+predicted
+# plot observed versus predicted
+ggplot() + aes(x = predicted, y = observed) + geom_point() + geom_line() + geom_abline( a = 0, b = 1, color = "red")
+# model summary
+summary(death.fit.logit)
+# calculate 
+glm.predict <- ifelse(predict(death.fit.logit, data.work2, type = "response") > 0.5, 1, 0)
+sum(diag(table(glm.predict, data.work2$ZSN))) / nrow(data.work2) # 0.7616
+```
+The final model fitted: $log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times age + 0.073 \times I(IBS = 1) + 0.696 \times I(IBS = 2) + 0.726 \times I(SIM = 1) + 0.476 \times I(endocr01 = 1) + 1.081 \times I(endocr02 = 1)$. Hosmer Lemeshow tests shows adequate goodness of fit (p = 0.4291).
+
+
+Fit logistic regression with multinomial response
+```{r}
+library(nnet)
+data.work3 <- filter(data.work2, LET_IS != 0)
+dim(data.work3) # n = 191
+table(data.work3$LET_IS)
+ggplot(data.work3, aes(as.factor(data.work3$LET_IS))) + geom_bar() + labs(title = "causes of death") + xlab("") + scale_x_discrete(labels = c("cardiogenic shock", "pulmonary endema", "myocardial rupture", "progress of conestive heart failure", "thromboembolism", "asystole", "ventricular fibrillation"), guide = guide_axis(n.dodge = 2))
+multinom(LET_IS ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work3)
+```
