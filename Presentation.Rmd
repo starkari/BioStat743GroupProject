@@ -116,19 +116,19 @@ grid.arrange(age.hist, sex.plot, nrow = 1)
 ## Descriptive statistics
 - Patient physiological attributes
 - IBS_POST: coronary heart disease in recent weeks before admission to hospital
-  - 0: there was no CHD
-  - 1: extertional angina pectoris
-  - 2: unstable angina pectoris
+    - 0: there was no CHD
+    - 1: extertional angina pectoris
+    - 2: unstable angina pectoris
 
 - DLIT_AG: duration of arterial hypertension
-  - 0: there was no arterial hypertension
-  - 1: one year
-  - 2: two years
-  - 3: three years
-  - 4: four years
-  - 5: five years
-  - 6: 6-10 years
-  - 7: more than 10 years
+    - 0: there was no arterial hypertension
+    - 1: one year
+    - 2: two years
+    - 3: three years
+    - 4: four years
+    - 5: five years
+    - 6: 6-10 years
+    - 7: more than 10 years
   
 ## Descriptive statistics  
 - SIM_GIPERT: systematic hypertension; 0 - no, 1 - yes
