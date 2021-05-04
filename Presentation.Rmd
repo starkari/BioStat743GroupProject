@@ -541,7 +541,7 @@ kable(res.for, digits = 3)%>% kable_styling(font_size = 8)
 Based on the AIC, both backward elimination and forward selection choose the model of 
 \begin{align*}
 \text{logit}[P(ZSN=1)]=&\alpha+\beta_1\,DLIT\_AG+\beta_2\,AGE+\beta_3\,endocr\_01 \\
- &+\beta_4\,DLIT\_AG * endocr_01.
+ &+\beta_4\,DLIT\_AG * endocr\_01.
 \end{align*}
 
 ## Predictive Power - ROC curves
