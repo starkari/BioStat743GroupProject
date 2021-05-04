@@ -347,7 +347,7 @@ dimnames(tab) <- list("Duration of AH"=c("None","1","2","3","4",
                       "Chronic Heart Failure"=c("No","Yes"))
 
 columnprops <- round(prop.table(tab, 2),3)
-rowprops <- prop.table(tab, 1)
+rowprops <- round(prop.table(tab, 1),3)
 
 # contingency table
 dlitag <- as.table(tab)
@@ -358,6 +358,11 @@ kable(columnprops,
 
 ```
 
+##
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+kable(rowprops,
+      caption= "Row proportions")
+```
 
 
 ## Examining the Standerdized residuals.
