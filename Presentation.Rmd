@@ -425,7 +425,7 @@ plot(plotdata$x, plotdata$yes/(plotdata$yes +plotdata$no),
      xlab="Duration of arterial hypertension", 
      ylab="Probability of CHF", 
      type = "p", pch=21, bg="black")
-points(plotdata$x, y_logit, pch=21, bg="cyam")
+points(plotdata$x, y_logit, pch=21, bg="lightgreen")
 lines(plotdata$x, y_linear , col=2)
 #points(plotdata$x, y_probit , col=5)
 #points(plotdata$x, y_cloglog , col=5)
@@ -447,13 +447,7 @@ p.val.sub=round((1-pchisq(G.sq,df.fit)),3)
 kable(model.info$coef, caption="Parameter Estiamtes for subset analysis")
 ```
 
-The p-value for the goodness of fit went down sharply (`r I(p.val.sub)`) but still didn't reach significance level to reject the null of no-fit. 
 
-
-## Conclusions
-
-* There is no significant association between CHF and the duration of arterial hypertension.
-* By itself, duration of arterial hypertension is not predictive of CHF.
 
 
 # Multiple Logistic Regression and Model Selection
