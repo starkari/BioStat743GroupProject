@@ -745,4 +745,7 @@ print(exp(table))
 
 ## 
 
-text 
+- Age and Sex are associated with CHF
+- Duration of Arterial Hypertension is predictive when included in a multivariate model
+- The final multivariable model for CHF is not rejected
+- Jadey
