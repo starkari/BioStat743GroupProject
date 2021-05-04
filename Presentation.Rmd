@@ -145,9 +145,7 @@ ibs.plot <- ggplot(data.work, aes(as.factor(data.work$IBS_POST))) +
 
 duration.hist <- ggplot(data.work, aes(data.work$DLIT_AG)) + 
   geom_histogram() + 
-  labs(title = "DLIT_AG", x = "years", y = "") +
-  annotate("text", x = 4, y = 450, label = "mean = 3.34") +
-  annotate("text", x = 4, y = 380, label = "median = 3") 
+  labs(title = "DLIT_AG", x = "years", y = "")
 #duration.hist
 
 hypertension.plot <- ggplot(data.work, aes(as.factor(data.work$SIM_GIPERT))) + 
@@ -664,7 +662,8 @@ $log \frac{\pi_i}{ 1 - \pi_i} = -6.018 + 0.058 \times AGE + 0.073 \times I(IBS =
 # use stepwise selection to select variable
 death.fit0 <- glm(death ~ 1, data = data.work2, family = binomial)
 death.fit1 <- glm(death ~ AGE + as.factor(SEX) + as.factor(IBS_POST) + DLIT_AG + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02) + AGE * factor(IBS_POST) + AGE * DLIT_AG + AGE * factor(SIM_GIPERT) + AGE * factor(endocr_01) + AGE * factor(endocr_02), data = data.work2, family = binomial)
-step(death.fit1, death.fit0, direction = "both", trace = F) # selected variable: AGE, IBS_POST, SIM_GIPERT, endocr_01, endocr_02
+death.mod <- step(death.fit1, death.fit0, direction = "both", trace = F) # selected variable: AGE, IBS_POST, SIM_GIPERT, endocr_01, endocr_02
+summary(death.mod)
 
 # fit the best model 
 death.fit.logit <- glm(death ~ AGE + as.factor(IBS_POST) + as.factor(SIM_GIPERT) + as.factor(endocr_01) + as.factor(endocr_02), data = data.work2, family = binomial)
@@ -673,6 +672,11 @@ deviance(death.fit.logit) # 1018.906
 
 exp(death.fit.logit$coefficients)
 ```
+
+```{r}
+kable(summary(death.mod)$coefficients)
+```
+
 
 ## Secondary analysis
 
