@@ -346,10 +346,15 @@ dimnames(tab) <- list("Duration of AH"=c("None","1","2","3","4",
                                          "5","6-10",">=10"),
                       "Chronic Heart Failure"=c("No","Yes"))
 
+columnprops <- round(prop.table(tab, 2),3)
+rowprops <- prop.table(tab, 1)
+
 # contingency table
-dlitag <- as.table(tab) 
-kable(dlitag,
-      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+dlitag <- as.table(tab)
+#kable(dlitag,
+#      caption = "Duration of Arterial Hypertension by Chronic Heart Failure")
+kable(columnprops,
+      caption= "column proportions")
 
 ```
 
