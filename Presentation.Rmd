@@ -379,7 +379,7 @@ mosaicplot(dlitag,
 ## 
 For Ix2 tables, testing for a linear trend in either response category, we use the Cochran-Armitage trend test. 
 
-```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+```{r ,echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 # Cochran Armitage Test for Ix2 tables - section 5.3.5 in the book
 coarm <- CochranArmitageTest(dlitag)
 coarm
@@ -416,27 +416,7 @@ kable(infolinear$coef, caption="Parameter Estiamtes for Identity link")
 #kable(modelinfo.cloglog$coef, caption="Parameter Estiamtes for cloglog link")
 ```
 
-## Goodness of fit tests for the fitted models
 
-For the logit  model:
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-G.sq=deviance(model.logit)
-df.fit <- model.logit$df.residual
-p.val=1-pchisq(G.sq,df.fit)
-```
-* $G^2$ = `r I(G.sq)`
-* df = `r I(df.fit)`
-* p-value = `r I(p.val)`
-
-For the linear model:
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-G.sq=deviance(model.linear)
-df.fit <- model.linear$df.residual
-p.val=1-pchisq(G.sq,df.fit)
-```
-* $G^2$ = `r I(G.sq)`
-* df = `r I(df.fit)`
-* p-value = `r I(p.val)`
 
 ## 
 Predicted probabilities for the fitted models and the observed data.
@@ -445,7 +425,7 @@ plot(plotdata$x, plotdata$yes/(plotdata$yes +plotdata$no),
      xlab="Duration of arterial hypertension", 
      ylab="Probability of CHF", 
      type = "p", pch=21, bg="black")
-points(plotdata$x, y_logit, pch=21, bg="blue")
+points(plotdata$x, y_logit, pch=21, bg="cyam")
 lines(plotdata$x, y_linear , col=2)
 #points(plotdata$x, y_probit , col=5)
 #points(plotdata$x, y_cloglog , col=5)
@@ -454,7 +434,7 @@ legend("bottomright", legend=c("Logistic - Blue dots", "Linear - Red line","Obse
 
 
 ## Sub-analysis
-We tested the Linear model for the subset: Duration of arterial hypertension between 1 and 5.
+We tested the Linear probability model for the subset: Duration of arterial hypertension between 1 and 5.
  
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 data.work.sub <- data.work.2 %>% 
@@ -467,17 +447,6 @@ p.val.sub=round((1-pchisq(G.sq,df.fit)),3)
 kable(model.info$coef, caption="Parameter Estiamtes for subset analysis")
 ```
 
-## 
-Predicted probabilities
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, paged.print=FALSE}
-newdata <- data.frame(DLIT_AG_N=seq(min(data.work.sub$DLIT_AG_N), max(data.work.sub$DLIT_AG_N),len=23))
-newdata$ZSN <- predict(model, newdata=newdata, type="response")
-plot(ZSN~DLIT_AG_N, data=data.work.sub, col="black",
-     main = "Plot A",
-     ylab = "Predicted probability of CHF", 
-     xlab = "Duration of arterial hypertension")
-lines(ZSN~DLIT_AG_N, newdata, col="Blue", lwd=2)
-```
 The p-value for the goodness of fit went down sharply (`r I(p.val.sub)`) but still didn't reach significance level to reject the null of no-fit. 
 
 
