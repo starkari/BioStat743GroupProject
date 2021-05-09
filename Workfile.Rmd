@@ -144,6 +144,7 @@ data.work.2 <- data.work %>%
 data.work.3 <- data.work %>% 
   mutate(DLIT_AG_N = case_when(DLIT_AG==6 ~ 8,  
                                DLIT_AG==7 ~ 10,
+                               DLIT_AG==0 ~ 0,
                                DLIT_AG==1 ~ 1,
                                DLIT_AG==2 ~ 2,
                                DLIT_AG==3 ~ 3,
