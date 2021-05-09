@@ -277,6 +277,16 @@ In conclusion, the variable of duration of arterial hypertension by itself is no
 ## Minsu
 Build a multivariable logistic regression model, identifying the best model, and calculating predictive power of the model.
 ```{r}
+data.work <- data.work %>% 
+  mutate(DLIT_AG_N = case_when(DLIT_AG==6 ~ 8,  
+                               DLIT_AG==7 ~ 10,
+                               DLIT_AG==0 ~ 0,
+                               DLIT_AG==1 ~ 1,
+                               DLIT_AG==2 ~ 2,
+                               DLIT_AG==3 ~ 3,
+                               DLIT_AG==4 ~ 4,
+                               DLIT_AG==5 ~ 5
+                               ))
 #fit a model with all 7 predictors
 data.work$SIM.f <- factor(data.work$SIM_GIPERT, levels=c(0,1), labels = c("no","yes"))
 data.work$endocr_01.f <- factor(data.work$endocr_01, levels=c(0,1), labels = c("no","yes"))
